@@ -1,5 +1,5 @@
 import Question from "./Question.js";
-import Ans_Q_GUI from "./Answering_A_Question_GUI.js";
+//import Ans_Q_GUI from "./Answering_A_Question_GUI.js";
 import Ans_Q_Controller from "./Answering_A_Question_Controller.js";
 
 test_check_valid_response_mc();
