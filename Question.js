@@ -2,7 +2,7 @@ export default class Question {
 	id;
 	type;
 	question;
-	choices;
+	answers;
 
 
 	static FRQ_MAX_LENGTH = 4;
@@ -21,11 +21,11 @@ export default class Question {
 		frq: Symbol("frq"),					// free response
 	})
 
-	constructor(id, type, question, choices) {
+	constructor(id, type, question, answers) {
 		this.id = id;
 		this.type = type;
 		this.question = question;
-		this.choices = choices;
+		this.answers = answers;
 	}
 }
 
