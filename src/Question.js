@@ -4,13 +4,15 @@ export default class Question {
 	question;
 	answers;
 
-
+	/**
+	 * @const
+	 */
 	static FRQ_MAX_LENGTH = 4;
 
 	/**
 	 * The types that Question can have
 	 * 
-	 * @author: Connor Funk
+	 * @author Connor Funk
 	 * 
 	 * @private
 	 * @enum
@@ -21,7 +23,17 @@ export default class Question {
 		frq: Symbol("frq"),					// free response
 	})
 
-	constructor(id, type, question, answers) {
+	/**
+	 * @author Connor Funk
+	 * 
+	 * @constructor
+	 * 
+	 * @param {number} id
+	 * @param {QType} type 
+	 * @param {string} question 
+	 * @param {string[]} answers 
+	 */
+	Question(id, type, question, answers) {
 		this.id = id;
 		this.type = type;
 		this.question = question;

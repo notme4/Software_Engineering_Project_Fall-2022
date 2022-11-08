@@ -5,16 +5,30 @@ export default class AnsweringAQuestionController {
 
 	question;
 
-	constructor(question) {
+	/**
+	 * @author Connor Funk
+	 * 
+	 * @constructor
+	 * @param {Question} [question=random] 
+	 */
+	AnsweringAQuestionController(question) {
 		if(question === null) {
-			// TODO: question = database.random_question();
+			// TODO: question = Database.getQuestion();
 		}
 		this.question = question;
 	}
 
-	// return 0 if success
-	// return -1 if database_add_response fails ?
-	// throw error otherwise
+	/**
+	 * @author Connor Funk
+	 * 
+	 * @param {int|string} response - the users response to the question 
+	 * 
+	 * @returns {number} 0 on success, -1 on Database fail
+	 * 
+	 * @throws {RangeError} see checkValidResponse type functions for details
+	 * @throws {TypeError} see checkValidResponse type functions for details
+	 * 
+	 */
 	checkValidResponse(response){
 		switch (this.question.type) {
 			case (Question.Q_type.mc) :
@@ -24,11 +38,21 @@ export default class AnsweringAQuestionController {
 			case (Question.Q_type.frq) :
 				return this.checkValidResponseFRQ(response);
 			default :
-				throw "question is not a valid type: '" + this.question.type + "'";
+				throw "TypeError: '" + this.question.type + "'is not a valid type";
 		}
 
 	}
 
+	/**
+	 * @author Connor Funk
+	 * 
+	 * @param {number} response 
+	 * 
+	 * @returns {number} 0 on success, -1 on database fail
+	 * 
+	 * @throws {TypeError} when response is not an integer
+	 * @throws {RangeError} when response is not a valid response
+	 */
 	checkValidResponseMC(response) {
 		if(typeof(response) !== 'number') {
 			throw "TypeError: '" + response + "' is not 'number'";
@@ -42,6 +66,16 @@ export default class AnsweringAQuestionController {
 		
 	}
 
+	/**
+	 * @author Connor Funk
+	 * 
+	 * @param {number} response 
+	 * 
+	 * @returns {number} 0 on success, -1 on database fail
+	 * 
+	 * @throws {TypeError} when response is not an integer
+	 * @throws {RangeError} when response is not a valid response
+	 */
 	checkValidResponseAllApply(response) {
 		if(typeof(response) !== 'number') {
 			throw "TypeError: '" + response + "' is not 'number'";
@@ -54,6 +88,16 @@ export default class AnsweringAQuestionController {
 		return 0;
 	}
 
+	/**
+	 * @author Connor Funk
+	 * 
+	 * @param {string} response
+	 * 
+	 * @returns {number} 0 on success, -1 on database fail
+	 * 
+	 * @throws {TypeError} when response is not a string
+	 * @throws {RangeError} when response is empty or too long
+	 */
 	checkValidResponseFRQ(response) {
 		if(typeof(response) !== 'string') {
 			throw "TypeError: '" + response + "' is not 'string'";
@@ -66,6 +110,16 @@ export default class AnsweringAQuestionController {
 		return 0;
 	}
 
+	/**
+	 * @author Connor Funk
+	 * 
+	 * @param {number} rating 
+	 * 
+	 * @returns 0 on success, -1 on Database fail
+	 * 
+	 * @throws {TypeError} when rating is not an integer
+	 * @throws {RangeError} when 0 <= rating <= 9 is false
+	 */
 	checkValidRating(rating) {
 		if(typeof(rating) !== 'number') {
 			throw "TypeError: '" + rating + "' is not 'number'";

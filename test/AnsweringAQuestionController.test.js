@@ -11,7 +11,7 @@ testCheckValidRating();
 /**
  * Asserts that actual is === to expected
  * 
- * @author: Connor Funk
+ * @author Connor Funk
  * 
  * @param {*} expected - the expected value
  * @param {*} actual - the actual value
@@ -23,6 +23,7 @@ function assertEqual(expected, actual) {
 		throw ("AssertError: got: '" + actual + "' but expected: '" + expected + "'");
 	}
 }
+
 /**
  * Asserts that fun returns expected when passed ...args
  * 
@@ -30,7 +31,7 @@ function assertEqual(expected, actual) {
  * 		 1) you can pass the function with arguments as () => fun(args)
  * 		 2) you can pass the arguments as a comma seperated list after fun (i.e. fun, args1, args2, ...)
  * 
- * @author: Connor Funk
+ * @author Connor Funk
  * 
  * @param {*} expected - the expected return of fun
  * @param {function} fun - the function to be called
@@ -52,7 +53,7 @@ function assertEqualFunction(expected, fun, ...args) {
  * 		 1) you can pass the function with arguments as () => fun(args)
  * 		 2) you can pass the arguments as a comma seperated list after fun (i.e. fun, args1, args2, ...)
  * 
- * @author: Connor Funk
+ * @author Connor Funk
  * 
  * @param {regex} expected - the regex of the exception expected to be thrown by fun
  * @param {function} fun - the function to be called
@@ -75,6 +76,7 @@ function assertCatch(expected, fun, ...args) {
 		throw ("AssertError: expected catch but no error thrown from " + fun);
 	}
 }
+
 
 function testCheckValidResponse() {
 	let q = new Question(-1, "type", "invalid", [0, 1, 2, 3]);
