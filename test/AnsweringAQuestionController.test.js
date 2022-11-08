@@ -1,12 +1,12 @@
-import Question from "./Question.js";
+import Question from "../src/Question";
 //import Ans_Q_GUI from "./Answering_A_Question_GUI.js";
-import Ans_Q_Controller from "./Answering_A_Question_Controller.js";
+import Ans_Q_Controller from "../src/AnsweringAQuestionController";
 
-test_check_valid_response_mc();
-test_check_valid_response_all_apply();
-test_check_valid_response_frq();
-test_check_valid_response();
-test_check_valid_rating();
+testCheckValidResponseMC();
+testCheckValidResponseAllApply();
+testCheckValidResponseFRQ();
+testCheckValidResponse();
+testCheckValidRating();
 
 /**
  * Asserts that actual is === to expected
@@ -18,7 +18,7 @@ test_check_valid_rating();
  * 
  * @throws {AssertError} when assertion is false
  */
-function assert_equals(expected, actual) {
+function assertEqual(expected, actual) {
 	if(actual !== expected) {
 		throw ("AssertError: got: '" + actual + "' but expected: '" + expected + "'");
 	}
@@ -38,7 +38,7 @@ function assert_equals(expected, actual) {
  * 
  * @throws {AssertError} when assertion is false
  */
-function assert_equals_fun(expected, fun, ...args) {
+function assertEqualFunction(expected, fun, ...args) {
 	let actual = fun(...args);
 	if(expected !== actual) {
 		throw ("AssertError: got: '" + actual + "' from " + fun + " but expected: '" + expected + "'");
@@ -60,7 +60,7 @@ function assert_equals_fun(expected, fun, ...args) {
  * 
  * @throws {AssertError} when assertion is false
  */
-function assert_catch(expected, fun, ...args) {
+function assertCatch(expected, fun, ...args) {
 	let threw_exception = false;
 	try {
 		fun(...args);
@@ -76,66 +76,66 @@ function assert_catch(expected, fun, ...args) {
 	}
 }
 
-function test_check_valid_response() {
+function testCheckValidResponse() {
 	let q = new Question(-1, "type", "invalid", [0, 1, 2, 3]);
 	let controller = new Ans_Q_Controller(q);
 
-	assert_catch("question is not a valid type: '.*'", () => controller.check_valid_response(0) );
+	assertCatch("question is not a valid type: '.*'", () => controller.checkValidResponse(0) );
 
-	test_check_valid_response_mc();
-	test_check_valid_response_all_apply();
-	test_check_valid_response_frq();
+	testCheckValidResponseMC();
+	testCheckValidResponseAllApply();
+	testCheckValidResponseFRQ();
 }
 
-function test_check_valid_response_mc() {
+function testCheckValidResponseMC() {
 	let q = new Question(-1, Question.Q_type.mc, "mcq", [0, 1, 2, 3]);
 	let controller = new Ans_Q_Controller(q);
 
-	assert_equals_fun(0, () => controller.check_valid_response(1) );
+	assertEqualFunction(0, () => controller.checkValidResponse(1) );
 
-	assert_catch("RangeError: '-?\\d+' is out of range \\[0,\\d+\\]", () => controller.check_valid_response(-1) );
-	assert_catch("RangeError: '-?\\d+' is out of range \\[0,\\d+\\]", () => controller.check_valid_response(16) );
-	assert_catch("TypeError: '-?\\d+\\.\\d+' is not an int", () => controller.check_valid_response(0.5) );
-	assert_catch("TypeError: '.+' is not 'number'" , () => controller.check_valid_response() );
-	assert_catch("TypeError: '.+' is not 'number'", () => controller.check_valid_response("string") );
+	assertCatch("RangeError: '-?\\d+' is out of range \\[0,\\d+\\]", () => controller.checkValidResponse(-1) );
+	assertCatch("RangeError: '-?\\d+' is out of range \\[0,\\d+\\]", () => controller.checkValidResponse(16) );
+	assertCatch("TypeError: '-?\\d+\\.\\d+' is not an int", () => controller.checkValidResponse(0.5) );
+	assertCatch("TypeError: '.+' is not 'number'" , () => controller.checkValidResponse() );
+	assertCatch("TypeError: '.+' is not 'number'", () => controller.checkValidResponse("string") );
 }
 
-function test_check_valid_response_all_apply() {
+function testCheckValidResponseAllApply() {
 	let q = new Question(-1, Question.Q_type.all_apply, "all_apply", [0, 1, 2, 3]);
 	let controller = new Ans_Q_Controller(q);
 
-	assert_equals_fun(0, () => controller.check_valid_response_all_apply(1) );
+	assertEqualFunction(0, () => controller.checkValidResponseAllApply(1) );
 
-	assert_catch("RangeError: '-?\\d+' is out of range \\(0,\\d+\\)", () => controller.check_valid_response(0) );
-	assert_catch("RangeError: '-?\\d+' is out of range \\(0,\\d+\\)", () => controller.check_valid_response(16) );
-	assert_catch("TypeError: '-?\\d+\\.\\d+' is not an int", () => controller.check_valid_response(0.5) );
-	assert_catch("TypeError: '.+' is not 'number'", () => controller.check_valid_response() );
-	assert_catch("TypeError: '.+' is not 'number'", () => controller.check_valid_response("string") );
+	assertCatch("RangeError: '-?\\d+' is out of range \\(0,\\d+\\)", () => controller.checkValidResponse(0) );
+	assertCatch("RangeError: '-?\\d+' is out of range \\(0,\\d+\\)", () => controller.checkValidResponse(16) );
+	assertCatch("TypeError: '-?\\d+\\.\\d+' is not an int", () => controller.checkValidResponse(0.5) );
+	assertCatch("TypeError: '.+' is not 'number'", () => controller.checkValidResponse() );
+	assertCatch("TypeError: '.+' is not 'number'", () => controller.checkValidResponse("string") );
 }
 
-function test_check_valid_response_frq() {
+function testCheckValidResponseFRQ() {
 	let q = new Question(-1, Question.Q_type.frq, "frq");
 	let controller = new Ans_Q_Controller(q);
 
-	assert_equals_fun(0, () => controller.check_valid_response_frq("hi") );
+	assertEqualFunction(0, () => controller.checkValidResponseFRQ("hi") );
 
-	assert_catch("RangeError: response is empty", () => controller.check_valid_response("") );
-	assert_catch("RangeError: '.+' is too long", () => controller.check_valid_response("hello") );
-	assert_catch("TypeError: '.+' is not 'string'", () => controller.check_valid_response() );
-	assert_catch("TypeError: '.+' is not 'string'", () => controller.check_valid_response(1) );
+	assertCatch("RangeError: response is empty", () => controller.checkValidResponse("") );
+	assertCatch("RangeError: '.+' is too long", () => controller.checkValidResponse("hello") );
+	assertCatch("TypeError: '.+' is not 'string'", () => controller.checkValidResponse() );
+	assertCatch("TypeError: '.+' is not 'string'", () => controller.checkValidResponse(1) );
 }
 
-function test_check_valid_rating() {
+function testCheckValidRating() {
 	let q = new Question(-1, Question.Q_type.frq, "frq");
 	let controller = new Ans_Q_Controller(q);
 	
-	assert_equals_fun(0, () => controller.check_valid_rating(2) );
+	assertEqualFunction(0, () => controller.checkValidRating(2) );
 
-	assert_catch("RangeError: '-?\\d+' is out of range \\[0,9\\]", () => controller.check_valid_rating(-1) );
-	assert_catch("RangeError: '-?\\d+' is out of range \\[0,9\\]", () => controller.check_valid_rating(10) );
-	assert_catch("TypeError: '-?\\d+\\.\\d+' is not an int", () => controller.check_valid_rating(0.5) );
-	assert_catch("TypeError: '.*' is not 'number'", () => controller.check_valid_rating() );
-	assert_catch("TypeError: '.*' is not 'number'", () => controller.check_valid_rating("test") );
+	assertCatch("RangeError: '-?\\d+' is out of range \\[0,9\\]", () => controller.checkValidRating(-1) );
+	assertCatch("RangeError: '-?\\d+' is out of range \\[0,9\\]", () => controller.checkValidRating(10) );
+	assertCatch("TypeError: '-?\\d+\\.\\d+' is not an int", () => controller.checkValidRating(0.5) );
+	assertCatch("TypeError: '.*' is not 'number'", () => controller.checkValidRating() );
+	assertCatch("TypeError: '.*' is not 'number'", () => controller.checkValidRating("test") );
 }
 
 // timestamping tests to help differentiate between tests, esp. successful ones

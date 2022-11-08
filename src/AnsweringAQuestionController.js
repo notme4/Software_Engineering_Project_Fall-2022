@@ -1,7 +1,7 @@
 import Question from "./Question.js"
-//import Ans_Q_GUI from "./Answering_A_Question_GUI.js"
+//import Ans_Q_GUI from "./AnsweringAQuestionGUI.js"
 
-export default class Answering_a_Question_Controller {
+export default class AnsweringAQuestionController {
 
 	question;
 
@@ -15,21 +15,21 @@ export default class Answering_a_Question_Controller {
 	// return 0 if success
 	// return -1 if database_add_response fails ?
 	// throw error otherwise
-	check_valid_response(response){
+	checkValidResponse(response){
 		switch (this.question.type) {
 			case (Question.Q_type.mc) :
-				return this.check_valid_response_mc(response);
+				return this.checkValidResponseMC(response);
 			case (Question.Q_type.all_apply) :
-				return this.check_valid_response_all_apply(response);
+				return this.checkValidResponseAllApply(response);
 			case (Question.Q_type.frq) :
-				return this.check_valid_response_frq(response);
+				return this.checkValidResponseFRQ(response);
 			default :
 				throw "question is not a valid type: '" + this.question.type + "'";
 		}
 
 	}
 
-	check_valid_response_mc(response) {
+	checkValidResponseMC(response) {
 		if(typeof(response) !== 'number') {
 			throw "TypeError: '" + response + "' is not 'number'";
 		} else if( response % 1 !== 0) {
@@ -42,7 +42,7 @@ export default class Answering_a_Question_Controller {
 		
 	}
 
-	check_valid_response_all_apply(response) {
+	checkValidResponseAllApply(response) {
 		if(typeof(response) !== 'number') {
 			throw "TypeError: '" + response + "' is not 'number'";
 		} else if( response % 1 !== 0) {
@@ -54,7 +54,7 @@ export default class Answering_a_Question_Controller {
 		return 0;
 	}
 
-	check_valid_response_frq(response) {
+	checkValidResponseFRQ(response) {
 		if(typeof(response) !== 'string') {
 			throw "TypeError: '" + response + "' is not 'string'";
 		} else if( response.length === 0) {
@@ -66,7 +66,7 @@ export default class Answering_a_Question_Controller {
 		return 0;
 	}
 
-	check_valid_rating(rating) {
+	checkValidRating(rating) {
 		if(typeof(rating) !== 'number') {
 			throw "TypeError: '" + rating + "' is not 'number'";
 		} else if(rating <  0 || rating >= 10) {

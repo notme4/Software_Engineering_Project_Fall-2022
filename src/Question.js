@@ -15,7 +15,7 @@ export default class Question {
 	 * @private
 	 * @enum
 	 */
-	static Q_type = Object.freeze({
+	static QType = Object.freeze({
 		mc: Symbol("mc"),					// multiple choice
 		all_apply: Symbol("all_apply"),		// check all that apply
 		frq: Symbol("frq"),					// free response
