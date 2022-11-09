@@ -22,7 +22,7 @@ export default class DatabaseManager {
 
 	/**
 	 * @description get a random Question
-	 * NOTE: must not be a random Question
+	 * NOTE: must not be a suggested Question
 	 * 
 	 * @return {Question}
 	 * 

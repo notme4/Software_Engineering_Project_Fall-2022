@@ -1,6 +1,6 @@
 import Question from "../src/Question";
 //import Ans_Q_GUI from "./Answering_A_Question_GUI.js";
-import Ans_Q_Controller from "../src/AnsweringAQuestionController";
+import AnsQController from "../src/AnsweringAQuestionController";
 
 testCheckValidResponseMC();
 testCheckValidResponseAllApply();
@@ -80,7 +80,7 @@ function assertCatch(expected, fun, ...args) {
 
 function testCheckValidResponse() {
 	let q = new Question(-1, "type", "invalid", [0, 1, 2, 3]);
-	let controller = new Ans_Q_Controller(q);
+	let controller = new AnsQController(q);
 
 	assertCatch("question is not a valid type: '.*'", () => controller.addQuestionResponse(0) );
 
@@ -91,7 +91,7 @@ function testCheckValidResponse() {
 
 function testCheckValidResponseMC() {
 	let q = new Question(-1, Question.Q_type.mc, "mcq", [0, 1, 2, 3]);
-	let controller = new Ans_Q_Controller(q);
+	let controller = new AnsQController(q);
 
 	assertEqualFunction(0, () => controller.addQuestionResponse(1) );
 
@@ -104,7 +104,7 @@ function testCheckValidResponseMC() {
 
 function testCheckValidResponseAllApply() {
 	let q = new Question(-1, Question.Q_type.all_apply, "all_apply", [0, 1, 2, 3]);
-	let controller = new Ans_Q_Controller(q);
+	let controller = new AnsQController(q);
 
 	assertEqualFunction(0, () => controller.checkValidResponseAllApply(1) );
 
@@ -117,7 +117,7 @@ function testCheckValidResponseAllApply() {
 
 function testCheckValidResponseFRQ() {
 	let q = new Question(-1, Question.Q_type.frq, "frq");
-	let controller = new Ans_Q_Controller(q);
+	let controller = new AnsQController(q);
 
 	assertEqualFunction(0, () => controller.checkValidResponseFRQ("hi") );
 
@@ -129,7 +129,7 @@ function testCheckValidResponseFRQ() {
 
 function testCheckValidRating() {
 	let q = new Question(-1, Question.Q_type.frq, "frq");
-	let controller = new Ans_Q_Controller(q);
+	let controller = new AnsQController(q);
 	
 	assertEqualFunction(0, () => controller.addRating(2) );
 
