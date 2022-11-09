@@ -1,7 +1,45 @@
 {
-	"type": "module",
-	"scripts": {
-		"test": "jest"
-	  },
-	"jest.jestCommandLine": "npm test"
+  "name": "software_engineering_project_fall-2022",
+  "version": "1.0.0",
+  "description": "A profile-based website where users can respond to surveys to come up with general statistics based on real opinions.",
+  "main": "index.js",
+  "directories": {
+    "src": "src",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/notme4/Software_Engineering_Project_Fall-2022.git"
+  },
+  "keywords": [],
+  "contributers": [
+    {
+      "type": "author",
+      "name": "Connor Funk",
+      "email": "cff200000@utdallas.edu"
+    },
+    {
+      "type": "author",
+      "name": "",
+      "email": ""
+    },
+    {
+      "type": "author",
+      "name": "",
+      "email": ""
+    },
+    {
+      "type": "author",
+      "name": "",
+      "email": ""
+    }
+
+  ],
+  "bugs": {
+    "url": "https://github.com/notme4/Software_Engineering_Project_Fall-2022/issues"
+  },
+  "homepage": "https://github.com/notme4/Software_Engineering_Project_Fall-2022#readme"
 }

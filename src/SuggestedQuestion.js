@@ -1,6 +1,6 @@
-import Question from "./Question.js"
+Question = require("./Question.js");
 
-export default class SuggestedQuestion extends Question {
+class SuggestedQuestion extends Question {
 	acctID;
 	date;
 
@@ -15,9 +15,11 @@ export default class SuggestedQuestion extends Question {
 	 * @param {string[]} answers 
 	 * @param {number} acctID 
 	 */
-	SuggestedQuestion(id, type, question, answers, acctID) {
+	constructor(id, type, question, answers, acctID) {
+		super(id, type, question, answers);
 		this.acctID = acctID;
 		this.date = new Date();
-		super(id, type, question, answers);
 	}
 }
+
+module.exports = SuggestedQuestion;

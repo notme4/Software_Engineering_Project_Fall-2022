@@ -1,5 +1,5 @@
 
-export default class Account {
+class Account {
 	id;
 	username;
 	password;
@@ -15,7 +15,7 @@ export default class Account {
 	 * @param {string} country 
 	 * @param {Date} DoB 
 	 */
-	Account(id, username, password, country, DoB) {
+	constructor(id, username, password, country, DoB) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
@@ -23,3 +23,5 @@ export default class Account {
 		this.DoB = DoB;
 	}
 }
+
+module.exports = Account;

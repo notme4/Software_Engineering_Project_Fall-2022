@@ -1,4 +1,4 @@
-export default class Question {
+class Question {
 	id;
 	type;
 	question;
@@ -11,10 +11,13 @@ export default class Question {
 
 	/**
 	 * The types that Question can have
+	 * @typedef {object} QType
+	 * @property {symbol} mc
+	 * @property {symbol} all_apply
+	 * @property {symbol} frq
 	 * 
 	 * @author Connor Funk
 	 * 
-	 * @private
 	 * @enum
 	 */
 	static QType = Object.freeze({
@@ -33,7 +36,7 @@ export default class Question {
 	 * @param {string} question 
 	 * @param {string[]} answers 
 	 */
-	Question(id, type, question, answers) {
+	constructor(id, type, question, answers) {
 		this.id = id;
 		this.type = type;
 		this.question = question;
@@ -41,5 +44,4 @@ export default class Question {
 	}
 }
 
-
-
+module.exports = Question;

@@ -1,6 +1,6 @@
-import Question from "./Question.js"
+Question = require("./Question.js");
 
-export default class QuestionAnswer extends Question {
+class QuestionAnswer extends Question {
 	acctID;
 	response;
 
@@ -16,9 +16,11 @@ export default class QuestionAnswer extends Question {
 	 * @param {number} acctID 
 	 * @param {number|string} response
 	 */
-	QuestionAnswer(id, type, question, answers, acctID, response) {
+	constructor(id, type, question, answers, acctID, response) {
+		super(id, type, question, answers);
 		this.acctID = acctID;
 		this.response = response;
-		super(id, type, question, answers);
 	}
 }
+
+module.exports = QuestionAnswer;

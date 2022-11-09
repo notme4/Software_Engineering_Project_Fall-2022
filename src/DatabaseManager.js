@@ -1,11 +1,8 @@
-import Question from "./Question.js"
-import SuggestedQuestion from "./SuggestedQuestion.js"
-import QuestionAnswer from "./QuestionAnswer.js"
-/*
-import Account from "./Account.js"
-import Account from "./"
-*/
-export default class DatabaseManager {
+SuggestedQuestion = require("./SuggestedQuestion.js");
+QuestionAnswer = require("./QuestionAnswer.js");
+Question = require("./Question.js");
+Account = require("./Account.js");
+class DatabaseManager {
 
 	/**
 	 * @description get a Question from ID
@@ -98,7 +95,7 @@ export default class DatabaseManager {
 	 * @todo implement
 	 */
 	static addQuestionAnswer(questionAnswer) {
-
+		return 0
 	}
 
 	/**
@@ -175,8 +172,8 @@ export default class DatabaseManager {
 	 * 
 	 * @todo implement 
 	 */
-	addQuestionRating(question, rating) {
-
+	static addQuestionRating(question, rating) {
+		return 0;
 	}
 
 
@@ -219,3 +216,5 @@ export default class DatabaseManager {
 
 	}
 }
+
+module.exports = DatabaseManager;

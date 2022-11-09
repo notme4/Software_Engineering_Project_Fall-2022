@@ -1,6 +1,6 @@
-import Question from "../src/Question";
-//import Ans_Q_GUI from "./Answering_A_Question_GUI.js";
-import AnsQController from "../src/AnsweringAQuestionController";
+const Question = require("../src/Question");
+const AnsQController = require("../src/AnsweringAQuestionController");
+const { QType } = require("../src/Question");
 
 testCheckValidResponseMC();
 testCheckValidResponseAllApply();
@@ -80,9 +80,8 @@ function assertCatch(expected, fun, ...args) {
 
 function testCheckValidResponse() {
 	let q = new Question(-1, "type", "invalid", [0, 1, 2, 3]);
-	let controller = new AnsQController(q);
 
-	assertCatch("question is not a valid type: '.*'", () => controller.addQuestionResponse(0) );
+	assertCatch("TypeError: '.*'is not a valid type", () => AnsQController.addQuestionResponse(q, 0) );
 
 	testCheckValidResponseMC();
 	testCheckValidResponseAllApply();
@@ -90,54 +89,50 @@ function testCheckValidResponse() {
 }
 
 function testCheckValidResponseMC() {
-	let q = new Question(-1, Question.Q_type.mc, "mcq", [0, 1, 2, 3]);
-	let controller = new AnsQController(q);
+	let q = new Question(-1, QType.mc, "mcq", [0, 1, 2, 3]);
 
-	assertEqualFunction(0, () => controller.addQuestionResponse(1) );
+	assertEqualFunction(0, () => AnsQController.addQuestionResponse(q, 1) );
 
-	assertCatch("RangeError: '-?\\d+' is out of range \\[0,\\d+\\]", () => controller.addQuestionResponse(-1) );
-	assertCatch("RangeError: '-?\\d+' is out of range \\[0,\\d+\\]", () => controller.addQuestionResponse(16) );
-	assertCatch("TypeError: '-?\\d+\\.\\d+' is not an int", () => controller.addQuestionResponse(0.5) );
-	assertCatch("TypeError: '.+' is not 'number'" , () => controller.addQuestionResponse() );
-	assertCatch("TypeError: '.+' is not 'number'", () => controller.addQuestionResponse("string") );
+	assertCatch("RangeError: '-?\\d+' is out of range \\[0,\\d+\\]", () => AnsQController.addQuestionResponse(q, -1) );
+	assertCatch("RangeError: '-?\\d+' is out of range \\[0,\\d+\\]", () => AnsQController.addQuestionResponse(q, 16) );
+	assertCatch("TypeError: '-?\\d+\\.\\d+' is not an int", () => AnsQController.addQuestionResponse(q, 0.5) );
+	assertCatch("TypeError: '.+' is not 'number'" , () => AnsQController.addQuestionResponse(q, ) );
+	assertCatch("TypeError: '.+' is not 'number'", () => AnsQController.addQuestionResponse(q, "string") );
 }
 
 function testCheckValidResponseAllApply() {
-	let q = new Question(-1, Question.Q_type.all_apply, "all_apply", [0, 1, 2, 3]);
-	let controller = new AnsQController(q);
+	let q = new Question(-1, QType.all_apply, "all_apply", [0, 1, 2, 3]);
 
-	assertEqualFunction(0, () => controller.checkValidResponseAllApply(1) );
+	assertEqualFunction(0, () => AnsQController.addQuestionResponse(q, 1) );
 
-	assertCatch("RangeError: '-?\\d+' is out of range \\(0,\\d+\\)", () => controller.addQuestionResponse(0) );
-	assertCatch("RangeError: '-?\\d+' is out of range \\(0,\\d+\\)", () => controller.addQuestionResponse(16) );
-	assertCatch("TypeError: '-?\\d+\\.\\d+' is not an int", () => controller.addQuestionResponse(0.5) );
-	assertCatch("TypeError: '.+' is not 'number'", () => controller.addQuestionResponse() );
-	assertCatch("TypeError: '.+' is not 'number'", () => controller.addQuestionResponse("string") );
+	assertCatch("RangeError: '-?\\d+' is out of range \\(0,\\d+\\)", () => AnsQController.addQuestionResponse(q, 0) );
+	assertCatch("RangeError: '-?\\d+' is out of range \\(0,\\d+\\)", () => AnsQController.addQuestionResponse(q, 16) );
+	assertCatch("TypeError: '-?\\d+\\.\\d+' is not an int", () => AnsQController.addQuestionResponse(q, 0.5) );
+	assertCatch("TypeError: '.+' is not 'number'", () => AnsQController.addQuestionResponse(q, ) );
+	assertCatch("TypeError: '.+' is not 'number'", () => AnsQController.addQuestionResponse(q, "string") );
 }
 
 function testCheckValidResponseFRQ() {
-	let q = new Question(-1, Question.Q_type.frq, "frq");
-	let controller = new AnsQController(q);
+	let q = new Question(-1, QType.frq, "frq");
 
-	assertEqualFunction(0, () => controller.checkValidResponseFRQ("hi") );
+	assertEqualFunction(0, () => AnsQController.addQuestionResponse(q, "hi") );
 
-	assertCatch("RangeError: response is empty", () => controller.addQuestionResponse("") );
-	assertCatch("RangeError: '.+' is too long", () => controller.addQuestionResponse("hello") );
-	assertCatch("TypeError: '.+' is not 'string'", () => controller.addQuestionResponse() );
-	assertCatch("TypeError: '.+' is not 'string'", () => controller.addQuestionResponse(1) );
+	assertCatch("RangeError: response is empty", () => AnsQController.addQuestionResponse(q, "") );
+	assertCatch("RangeError: '.+' is too long", () => AnsQController.addQuestionResponse(q, "hello") );
+	assertCatch("TypeError: '.+' is not 'string'", () => AnsQController.addQuestionResponse(q, ) );
+	assertCatch("TypeError: '.+' is not 'string'", () => AnsQController.addQuestionResponse(q, 1) );
 }
 
 function testCheckValidRating() {
-	let q = new Question(-1, Question.Q_type.frq, "frq");
-	let controller = new AnsQController(q);
+	let q = new Question(-1, QType.frq, "frq");
 	
-	assertEqualFunction(0, () => controller.addRating(2) );
+	assertEqualFunction(0, () => AnsQController.addRating(q, 2) );
 
-	assertCatch("RangeError: '-?\\d+' is out of range \\[0,9\\]", () => controller.addRating(-1) );
-	assertCatch("RangeError: '-?\\d+' is out of range \\[0,9\\]", () => controller.addRating(10) );
-	assertCatch("TypeError: '-?\\d+\\.\\d+' is not an int", () => controller.addRating(0.5) );
-	assertCatch("TypeError: '.*' is not 'number'", () => controller.addRating() );
-	assertCatch("TypeError: '.*' is not 'number'", () => controller.addRating("test") );
+	assertEqualFunction(-2, () => AnsQController.addRating(q, -1) );
+	assertEqualFunction(-2, () => AnsQController.addRating(q, 10) );
+	assertEqualFunction(-3, () => AnsQController.addRating(q, 0.5) );
+	assertEqualFunction(-1, () => AnsQController.addRating(q, ) );
+	assertEqualFunction(-1, () => AnsQController.addRating(q, "test") );
 }
 
 // timestamping tests to help differentiate between tests, esp. successful ones
