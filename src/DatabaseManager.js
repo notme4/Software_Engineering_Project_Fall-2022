@@ -93,7 +93,7 @@ export default class DatabaseManager {
 	 * @param {Question} question 
 	 * @param {number|string} answer 
 	 * 
-	 * @return {number} 0 for success, -1 for failure
+	 * @return {number} 0 for success, negative for failure
 	 * 
 	 * @todo implement
 	 */
@@ -130,7 +130,7 @@ export default class DatabaseManager {
 	 * 
 	 * @param {SuggestedQuestion} suggestedQuestion 
 	 * 
-	 * @return {number} 0 for success, -1 for failure
+	 * @return {number} 0 for success, negative for failure
 	 * 
 	 * @todo implement
 	 */
