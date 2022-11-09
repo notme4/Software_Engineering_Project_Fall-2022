@@ -5,10 +5,11 @@
   "main": "index.js",
   "directories": {
     "src": "src",
+    "lib": "lib",
     "test": "test"
   },
   "scripts": {
-    "test": "for file in ./test/*; do node $file; done"
+    "test": "for file in ./test/*; do node lib/test.js $file; done"
   },
   "repository": {
     "type": "git",
