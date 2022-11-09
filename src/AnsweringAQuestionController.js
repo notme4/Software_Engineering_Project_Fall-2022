@@ -48,7 +48,7 @@ class AnsweringAQuestionController {
 				AnsweringAQuestionController.checkValidResponseFRQ(question, response);
 				break;
 			default :
-				throw "TypeError: '" + question.type + "'is not a valid type";
+				throw new TypeError("'" + question.type + "'is not a valid type");
 		}
 		return Database.addQuestionAnswer(question, response);
 	}
@@ -67,11 +67,11 @@ class AnsweringAQuestionController {
 	 */
 	static checkValidResponseMC(question, response) {
 		if(typeof(response) !== 'number') {
-			throw "TypeError: '" + response + "' is not 'number'";
+			throw new TypeError("'" + response + "' is not 'number'");
 		} else if( response % 1 !== 0) {
-			throw "TypeError: '" + response + "' is not an int";
+			throw new TypeError("'" + response + "' is not an int");
 		} else if(response >= question.answers.length || response < 0) {
-			throw "RangeError: '" + response + "' is out of range [0," + question.answers.length + "]";
+			throw new RangeError("'" + response + "' is out of range [0," + question.answers.length + "]");
 		}
 	}
 
@@ -88,11 +88,11 @@ class AnsweringAQuestionController {
 	 */
 	static checkValidResponseAllApply(question, response) {
 		if(typeof(response) !== 'number') {
-			throw "TypeError: '" + response + "' is not 'number'";
+			throw new TypeError("'" + response + "' is not 'number'");
 		} else if( response % 1 !== 0) {
-			throw "TypeError: '" + response + "' is not an int";
+			throw new TypeError("'" + response + "' is not an int");
 		} else if(response >= (1 << question.answers.length) || response <= 0) {
-			throw "RangeError: '" + response + "' is out of range (0," + (1 << question.answers.length) + ")";
+			throw new RangeError("'" + response + "' is out of range (0," + (1 << question.answers.length) + ")");
 		}
 	}
 
@@ -109,11 +109,11 @@ class AnsweringAQuestionController {
 	 */
 	static checkValidResponseFRQ(question, response) {
 		if(typeof(response) !== 'string') {
-			throw "TypeError: '" + response + "' is not 'string'";
+			throw new TypeError("'" + response + "' is not 'string'");
 		} else if( response.length === 0) {
-			throw "RangeError: response is empty";
+			throw new RangeError("response is empty");
 		} else if(response.length > Question.FRQ_MAX_LENGTH) {
-			throw "RangeError: '" + response + "' is too long";
+			throw new RangeError("'" + response + "' is too long");
 		}
 	}
 

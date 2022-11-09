@@ -2,11 +2,15 @@ const Question = require("../src/Question");
 const AnsQController = require("../src/AnsweringAQuestionController");
 const { QType } = require("../src/Question");
 
-testCheckValidResponseMC();
-testCheckValidResponseAllApply();
-testCheckValidResponseFRQ();
-testCheckValidResponse();
-testCheckValidRating();
+class AssertError extends Error {
+	/**
+	 * 
+	 * @param {string | undefined} message 
+	 */
+	constructor(message) {
+		super(message);
+	}
+}
 
 /**
  * Asserts that actual is strictly equal to expected
@@ -61,31 +65,36 @@ function assertEqualFunction(expected, fun, ...args) {
  * 
  * @throws {AssertError} when assertion is false
  */
-function assertCatch(expected, fun, ...args) {
+function assertCatch(expectedErrorType, expectedErrorMessage, fun, ...args) {
 	let threw_exception = false;
 	try {
 		fun(...args);
 
 	} catch (err) {
 		threw_exception = true;
-		if(!err.toString().match(expected) ) {
-			throw ("AssertError: '" + err + "' from '" + fun + "' does not match: '" + expected + "'");
+		if(!err instanceof expectedErrorType) {
+			throw new AssertError("'" + err + "' from '" + fun + "' is not an instance of " + expectedErrorType);
+		}
+		if(!err.message.match(expectedErrorMessage) ) {
+			throw new AssertError("'" + err + "' from '" + fun + "' does not match: '" + expectedErrorMessage + "'");
 		}
 	}
 	if(!threw_exception) {
-		throw ("AssertError: expected catch but no error thrown from " + fun);
+		throw new AssertError("expected catch but no error thrown from " + fun);
 	}
 }
 
 
-function testCheckValidResponse() {
+function testAddQuestionResponse() {
 	let q = new Question(-1, "type", "invalid", [0, 1, 2, 3]);
 
-	assertCatch("TypeError: '.*'is not a valid type", () => AnsQController.addQuestionResponse(q, 0) );
+	assertCatch(TypeError, "'.*'is not a valid type", () => AnsQController.addQuestionResponse(q, 0) );
 
+	/*
 	testCheckValidResponseMC();
 	testCheckValidResponseAllApply();
 	testCheckValidResponseFRQ();
+	*/
 }
 
 function testCheckValidResponseMC() {
@@ -93,11 +102,11 @@ function testCheckValidResponseMC() {
 
 	assertEqualFunction(0, () => AnsQController.addQuestionResponse(q, 1) );
 
-	assertCatch("RangeError: '-?\\d+' is out of range \\[0,\\d+\\]", () => AnsQController.addQuestionResponse(q, -1) );
-	assertCatch("RangeError: '-?\\d+' is out of range \\[0,\\d+\\]", () => AnsQController.addQuestionResponse(q, 16) );
-	assertCatch("TypeError: '-?\\d+\\.\\d+' is not an int", () => AnsQController.addQuestionResponse(q, 0.5) );
-	assertCatch("TypeError: '.+' is not 'number'" , () => AnsQController.addQuestionResponse(q, ) );
-	assertCatch("TypeError: '.+' is not 'number'", () => AnsQController.addQuestionResponse(q, "string") );
+	assertCatch(RangeError, "'-?\\d+' is out of range \\[0,\\d+\\]", () => AnsQController.addQuestionResponse(q, -1) );
+	assertCatch(RangeError, "'-?\\d+' is out of range \\[0,\\d+\\]", () => AnsQController.addQuestionResponse(q, 16) );
+	assertCatch(TypeError, "'-?\\d+\\.\\d+' is not an int", () => AnsQController.addQuestionResponse(q, 0.5) );
+	assertCatch(TypeError, "'.+' is not 'number'" , () => AnsQController.addQuestionResponse(q, ) );
+	assertCatch(TypeError, "'.+' is not 'number'", () => AnsQController.addQuestionResponse(q, "string") );
 }
 
 function testCheckValidResponseAllApply() {
@@ -105,11 +114,11 @@ function testCheckValidResponseAllApply() {
 
 	assertEqualFunction(0, () => AnsQController.addQuestionResponse(q, 1) );
 
-	assertCatch("RangeError: '-?\\d+' is out of range \\(0,\\d+\\)", () => AnsQController.addQuestionResponse(q, 0) );
-	assertCatch("RangeError: '-?\\d+' is out of range \\(0,\\d+\\)", () => AnsQController.addQuestionResponse(q, 16) );
-	assertCatch("TypeError: '-?\\d+\\.\\d+' is not an int", () => AnsQController.addQuestionResponse(q, 0.5) );
-	assertCatch("TypeError: '.+' is not 'number'", () => AnsQController.addQuestionResponse(q, ) );
-	assertCatch("TypeError: '.+' is not 'number'", () => AnsQController.addQuestionResponse(q, "string") );
+	assertCatch(RangeError, "'-?\\d+' is out of range \\(0,\\d+\\)", () => AnsQController.addQuestionResponse(q, 0) );
+	assertCatch(RangeError, "'-?\\d+' is out of range \\(0,\\d+\\)", () => AnsQController.addQuestionResponse(q, 16) );
+	assertCatch(TypeError, "'-?\\d+\\.\\d+' is not an int", () => AnsQController.addQuestionResponse(q, 0.5) );
+	assertCatch(TypeError, "'.+' is not 'number'", () => AnsQController.addQuestionResponse(q, ) );
+	assertCatch(TypeError, "'.+' is not 'number'", () => AnsQController.addQuestionResponse(q, "string") );
 }
 
 function testCheckValidResponseFRQ() {
@@ -117,10 +126,10 @@ function testCheckValidResponseFRQ() {
 
 	assertEqualFunction(0, () => AnsQController.addQuestionResponse(q, "hi") );
 
-	assertCatch("RangeError: response is empty", () => AnsQController.addQuestionResponse(q, "") );
-	assertCatch("RangeError: '.+' is too long", () => AnsQController.addQuestionResponse(q, "hello") );
-	assertCatch("TypeError: '.+' is not 'string'", () => AnsQController.addQuestionResponse(q, ) );
-	assertCatch("TypeError: '.+' is not 'string'", () => AnsQController.addQuestionResponse(q, 1) );
+	assertCatch(RangeError, "response is empty", () => AnsQController.addQuestionResponse(q, "") );
+	assertCatch(RangeError, "'.+' is too long", () => AnsQController.addQuestionResponse(q, "hello") );
+	assertCatch(TypeError, "'.+' is not 'string'", () => AnsQController.addQuestionResponse(q, ) );
+	assertCatch(TypeError, "'.+' is not 'string'", () => AnsQController.addQuestionResponse(q, 1) );
 }
 
 function testCheckValidRating() {
@@ -161,5 +170,42 @@ Date.prototype.timeNow = function () {
 }
 Date.prototype.getFullTime = function () {
 	return this.today() + " @ " + this.timeNow();
+}
+
+
+
+
+testFunctions = [
+	testCheckValidResponseMC,
+	testCheckValidResponseAllApply,
+	testCheckValidResponseFRQ,
+	testAddQuestionResponse,
+	testCheckValidRating
+]
+
+var failed = [];
+
+for (i in testFunctions){
+	funct = testFunctions[i];
+	console.log(funct);
+	try{
+		funct();
+		console.log("success\n")
+	} catch (error) {
+		console.error(error);
+		console.error(error.name + " " + error.message);
+		console.error(error.stack);
+		console.log("fail\n")
+		failed.push(funct);
+		allSucceeded = false;
+	}	
+}
+if(failed.length > 0) {
+	for (i in failed) {
+		funct = failed[i];
+		console.error(funct.name + " Failed");
+	}
+} else {
+	console.log("All Tests Successful!");
 }
 console.log(new Date().getFullTime() );
