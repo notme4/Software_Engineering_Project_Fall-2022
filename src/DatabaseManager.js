@@ -1,5 +1,6 @@
 import Question from "./Question.js"
 import SuggestedQuestion from "./SuggestedQuestion.js"
+import QuestionAnswer from "./QuestionAnswer.js"
 /*
 import Account from "./Account.js"
 import Account from "./"
@@ -90,14 +91,13 @@ export default class DatabaseManager {
 	/**
 	 * @description add a question to the database
 	 * 
-	 * @param {Question} question 
-	 * @param {number|string} answer 
+	 * @param {QuestionAnswer} questionAnswer 
 	 * 
 	 * @return {number} 0 for success, negative for failure
 	 * 
 	 * @todo implement
 	 */
-	static addQuestionAnswer(question, answer) {
+	static addQuestionAnswer(questionAnswer) {
 
 	}
 
