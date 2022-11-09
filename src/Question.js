@@ -4,19 +4,17 @@ class Question {
 	question;
 	answers;
 
-	/**
-	 * @const
-	 */
 	static FRQ_MAX_LENGTH = 4;
 
 	/**
-	 * The types that Question can have
+	 * @description The types that Question can have
+	 * 
+	 * @author Connor Funk
+	 * 
 	 * @typedef {object} QType
 	 * @property {symbol} mc
 	 * @property {symbol} all_apply
 	 * @property {symbol} frq
-	 * 
-	 * @author Connor Funk
 	 * 
 	 * @enum
 	 */

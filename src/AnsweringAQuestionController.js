@@ -34,7 +34,7 @@ class AnsweringAQuestionController {
 	 * @throws {RangeError} see checkValidResponse type functions for details
 	 * @throws {TypeError} see checkValidResponse type functions for details
 	 * 
-	 * @todo come up with a better name
+	 * 
 	 */
 	static addQuestionResponse(question, response){
 		switch (question.type) {

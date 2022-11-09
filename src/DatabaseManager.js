@@ -1,7 +1,7 @@
-SuggestedQuestion = require("./SuggestedQuestion.js");
-QuestionAnswer = require("./QuestionAnswer.js");
-Question = require("./Question.js");
-Account = require("./Account.js");
+const SuggestedQuestion = require("./SuggestedQuestion.js");
+const QuestionAnswer = require("./QuestionAnswer.js");
+const Question = require("./Question.js");
+const Account = require("./Account.js");
 class DatabaseManager {
 
 	/**

@@ -1,4 +1,4 @@
-Question = require("./Question.js");
+const Question = require("./Question.js");
 
 class QuestionAnswer extends Question {
 	acctID;
