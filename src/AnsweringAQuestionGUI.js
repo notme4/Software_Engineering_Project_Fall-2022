@@ -5,6 +5,8 @@ if(typeof(require) === 'function' ) {
 
 let question;
 let response;
+const LOWER_CASE = 97;
+const UPPER_CASE = 65;
 
 function LoadQuestion() {
 	if(typeof(question) !== 'object' || !(question instanceof Question) ) {
@@ -40,9 +42,10 @@ function buildQuestion() {
  */
 function buildMCQuestion() {
 	let result = "";
-	char = 65
+	char = UPPER_CASE;
 	for (i in question.answers) {
-		result += "<input id='" + (char - 65) + "' type='button' onclick='chooseResponseMC(" + (char - 65) + ")' value='" + String.fromCharCode(char) + "'>\n";
+		id = (char - 65);
+		result += "<input id='" + id + "' type='button' onclick='chooseResponseMC(" + id + ")' value='" + String.fromCharCode(char) + "'>\n";
 		result += "<p>" + question.answers[i] + "</p>\n";
 		char++;
 	}
@@ -53,9 +56,10 @@ function buildMCQuestion() {
 
 function buildAllApplyQuestion() {
 	let result = "";
-	char = 65
+	char = LOWER_CASE;
 	for (i in question.answers) {
-		result += "<input id='" + (1 << (char - 65) ) + "' type='button' onclick='chooseResponseAllApply(" + (1 << (char - 65) ) + ")' value='" + String.fromCharCode(char) + "'>\n";
+		id = (1 << (char - LOWER_CASE) );
+		result += "<input id='" + id + "' type='button' onclick='chooseResponseAllApply(" + id + ")' value='" + String.fromCharCode(char) + "'>\n";
 		result += "<p>" + question.answers[i] + "</p>\n";
 		char++;
 	}
@@ -82,8 +86,7 @@ function chooseResponseAllApply(choice) {
 	if(typeof(response) === 'undefined') {
 		response = 0;
 	}
-	alert(response + " " + choice + " " + (response & choice) );
-
+	openSubmitButton();
 	let bgColor;
 	console.log(response & choice);
 	if( (response & choice) == 0) {
@@ -94,15 +97,21 @@ function chooseResponseAllApply(choice) {
 		response -= choice;
 	}
 	document.getElementById(choice).style.backgroundColor = bgColor;
-	openSubmitButton();
+	if(response == 0) {
+		closeSubmitButton();
+	}
 }
 
 function openSubmitButton() {
 	document.getElementById("Submit").innerHTML = "<input type='Submit' onclick='addQuestionResponse()'>";
 }
 
+function closeSubmitButton() {
+	document.getElementById("Submit").innerHTML = "";
+}
+
 function addQuestionResponse() {
-	alert("addQuestionResponse" + response);
+	alert("Response is: " + response);
 	AnsweringAQuestionController.addQuestionResponse(question, response);
 }
 
