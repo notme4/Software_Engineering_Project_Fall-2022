@@ -42,4 +42,6 @@ class Question {
 	}
 }
 
-module.exports = Question;
+if(typeof(module) === 'object') {
+	module.exports = Question;
+}

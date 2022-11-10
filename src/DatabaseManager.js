@@ -1,8 +1,10 @@
-const SuggestedQuestion = require("./SuggestedQuestion.js");
-const QuestionAnswer = require("./QuestionAnswer.js");
-const Question = require("./Question.js");
-const Account = require("./Account.js");
-class DatabaseManager {
+if(typeof(require) === 'function' ) {
+	const SuggestedQuestion = require("./SuggestedQuestion.js");
+	const QuestionAnswer = require("./QuestionAnswer.js");
+	const Question = require("./Question.js");
+	const Account = require("./Account.js");
+}
+	class DatabaseManager {
 
 	/**
 	 * @description get a Question from ID
@@ -13,7 +15,7 @@ class DatabaseManager {
 	 * 
 	 * @todo implement
 	 */
-	static getQuestion(QID) {
+	static getQuestionFromQID(QID) {
 
 	}
 
@@ -25,8 +27,8 @@ class DatabaseManager {
 	 * 
 	 * @todo implement
 	 */
-	static getQuestion() {
-
+	static getRandomQuestion() {
+		return new Question(-1, Question.QType.all_apply, "all apply", ['0', '1', '2', '3'] );
 	}
 
 	/**
@@ -187,7 +189,7 @@ class DatabaseManager {
 	 * 
 	 * @todo implement
 	 */
-	static getAccount(AcctID) {
+	static getAccountFromAcctID(AcctID) {
 
 	}
 
@@ -201,7 +203,7 @@ class DatabaseManager {
 	 * 
 	 * @todo implement
 	 */
-	static getAccount(username, password) {
+	static getAccountFromUsernamePassword(username, password) {
 
 	}
 
@@ -217,4 +219,6 @@ class DatabaseManager {
 	}
 }
 
-module.exports = DatabaseManager;
+if(typeof(module) === 'object') {
+	module.exports = DatabaseManager;
+}

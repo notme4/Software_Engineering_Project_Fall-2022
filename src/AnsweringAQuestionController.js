@@ -1,24 +1,31 @@
-const { QType } = require("./Question.js");
-const Question = require("./Question.js");
-const Database = require("./DatabaseManager.js");
-
+if(typeof(require) === 'function' ) {
+	const Question = require("./Question");
+	const DatabaseManager = require("./DatabaseManager");
+}
 class AnsweringAQuestionController {
-	question;
 
 	/**
+	 * @description gets a random question from the database
+	 * 
 	 * @author Connor Funk
 	 * 
-	 * @constructor
-	 * @param {?Question|number} [question=random] 
+	 * @returns {Question} 
 	 */
-	constructor(question) {
-		if(question === null) {
-			question = Database.getQuestion();
-		
-		} else if(typeof(question) === "number") {
-			question = Database.getQuestion(question);
-		}
-		this.question = question;
+	static getRandomQuestion() {
+		return DatabaseManager.getRandomQuestion();
+	}
+
+	/**
+	 * @description returns question with QID
+	 * 
+	 * @author Connor Funk
+	 * 
+	 * @param {number} QID	
+	 * 
+	 * @returns {Question}
+	 */
+	static getQuestionFromQID(QID) {
+		return DatabaseManager.getRandomQuestion(QID);
 	}
 
 	/**
@@ -38,19 +45,19 @@ class AnsweringAQuestionController {
 	 */
 	static addQuestionResponse(question, response){
 		switch (question.type) {
-			case (QType.mc) :
+			case (Question.QType.mc) :
 				AnsweringAQuestionController.checkValidResponseMC(question, response);
 				break;
-			case (QType.all_apply) :
+			case (Question.QType.all_apply) :
 				AnsweringAQuestionController.checkValidResponseAllApply(question, response);
 				break;
-			case (QType.frq) :
+			case (Question.QType.frq) :
 				AnsweringAQuestionController.checkValidResponseFRQ(question, response);
 				break;
 			default :
 				throw new TypeError("'" + question.type + "'is not a valid type");
 		}
-		return Database.addQuestionAnswer(question, response);
+		return DatabaseManager.addQuestionAnswer(question, response);
 	}
 
 	/**
@@ -138,8 +145,10 @@ class AnsweringAQuestionController {
 			return -3;
 			// throw "TypeError: '" + rating + "' is not an int";
 		}
-		return Database.addQuestionRating(question, rating);
+		return DatabaseManager.addQuestionRating(question, rating);
 	}
 }
 
-module.exports = AnsweringAQuestionController;
+if(typeof(module) === 'object') {
+	module.exports = AnsweringAQuestionController;
+}

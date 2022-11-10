@@ -23,4 +23,6 @@ class QuestionAnswer extends Question {
 	}
 }
 
-module.exports = QuestionAnswer;
+if(typeof(module) === 'object') {
+	module.exports = QuestionAnswer;
+}
