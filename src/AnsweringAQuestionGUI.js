@@ -10,6 +10,12 @@ let acctID = ERR_ACCT_ID;
 let question;
 let response;
 
+/**
+ * @description loads important data for answering a question.
+ * 				called when question.html loads.
+ * 
+ * @author Connor Funk
+ */
 function LoadPage() {
 	srch = window.location.search;
 	if(srch.length > 0) {
@@ -29,6 +35,11 @@ function LoadPage() {
 	buildQuestion();
 }
 
+/**
+ * @description builds the html for a question
+ * 
+ * @author Connor Funk
+ */
 function buildQuestion() {
 	let result = "<h1 class='question'>" + question.question + "</h1>\n"
 	switch(question.type) {
@@ -48,9 +59,11 @@ function buildQuestion() {
 }
 
 /**
- * @description return html for a MC question
+ * @description builds html for a multiple choice question
  * 
  * @author Connor Funk
+ * 
+ * @returns {string} html tags for a multiple choice question
  * 
  * @todo switch to radio
  */
@@ -58,7 +71,7 @@ function buildMCQuestion() {
 	let result = "";
 	char = UPPER_CASE;
 	for (i in question.answers) {
-		id = (char - 65);
+		id = (char - UPPER_CASE);
 		result += "<div display='inline-block'>\n";
 		result += "<input id='" + id + "' type='button' onclick='chooseResponseMC(" + id + ")' value='" + String.fromCharCode(char) + "' class='button' style='border-radius: 50%;'>\n";
 		result += "<p'>" + question.answers[i] + "</p>\n";
@@ -68,6 +81,13 @@ function buildMCQuestion() {
 	return result;
 }
 
+/**
+ * @description builds html for an all apply question
+ * 
+ * @author Connor Funk
+ * 
+ * @returns {string} html tags for an all apply question
+ */
 function buildAllApplyQuestion() {
 	let result = "";
 	char = LOWER_CASE;
@@ -82,6 +102,13 @@ function buildAllApplyQuestion() {
 	return result;
 }
 
+/**
+ * @description builds html for a free response question
+ * 
+ * @author Connor Funk
+ * 
+ * @returns {string} html tags for a free response question
+ */
 function buildFRQuestion() {
 	let result = "<div style='text-align: center;'>";
 	result += "<textarea id='frq-text' maxlength='" + Question.FRQ_MAX_LENGTH + "' cols='50' rows='5' wrap='soft' style='resize:none;' oninput='chooseResponseFRQ()' autofocus></textarea>\n";
@@ -90,6 +117,14 @@ function buildFRQuestion() {
 	return result + "</div>";
 }
 
+/**
+ * @description updates the response to the question and opens the 
+ * 				submit button.
+ * 
+ * @author Connor Funk
+ * 
+ * @param {number} choice - number representing the button clicked
+ */
 function chooseResponseMC(choice) {
 	response = choice;
 	for(i in question.answers) {
@@ -102,6 +137,15 @@ function chooseResponseMC(choice) {
 	openSubmitButton();
 }
 
+/**
+ * @description updates the response to the question and opens the 
+ * 				submit button. Closes it again if all responses are
+ * 				unchosen.
+ * 
+ * @author Connor Funk
+ * 
+ * @param {number} choice - number representing the button clicked
+ */
 function chooseResponseAllApply(choice) {
 	if(typeof(response) === 'undefined') {
 		response = 0;
@@ -119,6 +163,14 @@ function chooseResponseAllApply(choice) {
 	}
 }
 
+/**
+ * @description updates the response to the question and opens the 
+ * 				submit button. Closes it again if the responses is 
+ * 				empty.
+ * 
+ * @author Connor Funk
+ * 
+ */
 function chooseResponseFRQ() {
 	response = document.getElementById("frq-text").value;
 	document.getElementById("frq-length").innerHTML = Question.FRQ_MAX_LENGTH - response.length;
@@ -129,14 +181,29 @@ function chooseResponseFRQ() {
 	}
 }
 
+/**
+ * @description makes the submit button available
+ * 
+ * @author Connor Funk
+ */
 function openSubmitButton() {
 	document.getElementById("Submit").innerHTML = "<input type='Submit' onclick='addQuestionAnswer()'>";
 }
 
+/**
+ * @description makes the submit button no longer available
+ * 
+ * @author Connor Funk
+ */
 function closeSubmitButton() {
 	document.getElementById("Submit").innerHTML = "";
 }
 
+/**
+ * @description adds the response to the question to the database and opens
+ * 				the rating and next options.
+ * 				called when the submit button is clicked.
+ */
 function addQuestionAnswer() {
 	AnsweringAQuestionController.addQuestionAnswer(question, acctID, response);
 	document.getElementById("next").innerHTML = "<a href='home.html' class=''>" +
@@ -158,6 +225,9 @@ function addQuestionAnswer() {
 
 }
 
+/**
+ * @description adds the question rating to the database.
+ */
 function addQuestionRating() {
 	AnsweringAQuestionController.addQuestionRating();
 }
