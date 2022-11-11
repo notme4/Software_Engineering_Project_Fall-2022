@@ -58,7 +58,7 @@ function buildMCQuestion() {
 	for (i in question.answers) {
 		id = (char - 65);
 		result += "<div display='inline-block'>\n";
-		result += "<input id='" + id + "' type='button' onclick='chooseResponseMC(" + id + ")' value='" + String.fromCharCode(char) + "' class='button'>\n";
+		result += "<input id='" + id + "' type='button' onclick='chooseResponseMC(" + id + ")' value='" + String.fromCharCode(char) + "' class='button' style='border-radius: 50%;'>\n";
 		result += "<p'>" + question.answers[i] + "</p>\n";
 		result += "</div>\n";
 		char++;
@@ -92,10 +92,10 @@ function chooseResponseMC(choice) {
 	response = choice;
 	for(i in question.answers) {
 		//document.getElementById(i).style.backgroundColor = "revert";
-		document.getElementById(i).className = "revert";
+		document.getElementById(i).className = "button";
 	}
 	//document.getElementById(choice).style.backgroundColor = "#008CBA";
-	document.getElementById(choice).className = "button-chosen";
+	document.getElementById(choice).className += " button-chosen";
 	//document.style.backgroundColor = ""
 	openSubmitButton();
 }
@@ -105,14 +105,12 @@ function chooseResponseAllApply(choice) {
 		response = 0;
 	}
 	openSubmitButton();
-	let className;
+	let className = "button";
 	if( (response & choice) == 0) {
-		className = "button-chosen";
-		response += choice;
-	} else {
-		className = "button";
-		response -= choice;
+		className += " button-chosen";
 	}
+	response = response ^ choice;
+
 	document.getElementById(choice).className = className;
 	if(response == 0) {
 		closeSubmitButton();
