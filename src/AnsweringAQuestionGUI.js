@@ -3,21 +3,33 @@ if(typeof(require) === 'function' ) {
 	const Question = require("../src/Question");
 }
 
+let CF_ADMIN_ACCT_ID = -1;
 let question;
 let response;
 const LOWER_CASE = 97;
 const UPPER_CASE = 65;
 
 function LoadQuestion() {
+	srch = window.location.search;
+	if(srch.length > 0) {
+		regex = /\??qid=-?\d+/;
+		qid = srch.split('&').find(element => regex.test(element) );
+		if(typeof(qid) === 'string') {
+			while(!qid.charAt(0).match(/[\d-]/) ) {
+				qid = qid.substring(1);
+			}
+			question = AnsweringAQuestionController.getQuestionFromQID(Number.parseInt(qid) );
+		}
+	}
+
 	if(typeof(question) !== 'object' || !(question instanceof Question) ) {
 		question = AnsweringAQuestionController.getRandomQuestion();
-		console.log(question);
 	}
 }
 
 function buildQuestion() {
 	LoadQuestion();
-	let result = "<h1>" + question.question + "</h1>\n"
+	let result = "<h1 class='question'>" + question.question + "</h1>\n"
 	switch(question.type) {
 		case (Question.QType.mc) :
 			result += buildMCQuestion();
@@ -31,13 +43,13 @@ function buildQuestion() {
 		default :
 			result = "invalid Question";
 	}
-	console.log(result);
 	document.getElementById("Question").innerHTML = result;
 }
 
 /**
- * return html for a MC question
+ * @description return html for a MC question
  * 
+ * @author Connor Funk
  * 
  */
 function buildMCQuestion() {
@@ -45,12 +57,12 @@ function buildMCQuestion() {
 	char = UPPER_CASE;
 	for (i in question.answers) {
 		id = (char - 65);
-		result += "<input id='" + id + "' type='button' onclick='chooseResponseMC(" + id + ")' value='" + String.fromCharCode(char) + "'>\n";
-		result += "<p>" + question.answers[i] + "</p>\n";
+		result += "<div display='inline-block'>\n";
+		result += "<input id='" + id + "' type='button' onclick='chooseResponseMC(" + id + ")' value='" + String.fromCharCode(char) + "' class='button'>\n";
+		result += "<p'>" + question.answers[i] + "</p>\n";
+		result += "</div>\n";
 		char++;
 	}
-	console.log("\n\n");
-	console.log(result);
 	return result;
 }
 
@@ -59,25 +71,31 @@ function buildAllApplyQuestion() {
 	char = LOWER_CASE;
 	for (i in question.answers) {
 		id = (1 << (char - LOWER_CASE) );
-		result += "<input id='" + id + "' type='button' onclick='chooseResponseAllApply(" + id + ")' value='" + String.fromCharCode(char) + "'>\n";
-		result += "<p>" + question.answers[i] + "</p>\n";
+		result += "<div display='inline-block'>\n";
+		result += "\t<input id='" + id + "' type='button' onclick='chooseResponseAllApply(" + id + ")' value='" + String.fromCharCode(char) + "' class='button'>\n";
+		result += "\t<p'>" + question.answers[i] + "</p>\n";
+		result += "</div>\n";
 		char++;
 	}
-	console.log("\n\n");
-	console.log(result);
 	return result;
 }
 
 function buildFRQuestion() {
-	return "<input id='frq'>"
+	let result = "<div style='text-align: center;'>";
+	result += "<textarea id='frq-text' maxlength='" + Question.FRQ_MAX_LENGTH + "' cols='50' rows='5' wrap='soft' style='resize:none;' oninput='chooseResponseFRQ()'></textarea>\n";
+	result += "<div style='text-align: right; margin-right: 18%; margin-top: -3%;'>";
+	result += "<p id='frq-length'>" + Question.FRQ_MAX_LENGTH + "</p>"
+	return result + "</div>";
 }
 
 function chooseResponseMC(choice) {
 	response = choice;
 	for(i in question.answers) {
-		document.getElementById(i).style.backgroundColor = "revert";
+		//document.getElementById(i).style.backgroundColor = "revert";
+		document.getElementById(i).className = "revert";
 	}
-	document.getElementById(choice).style.backgroundColor = "#008CBA";
+	//document.getElementById(choice).style.backgroundColor = "#008CBA";
+	document.getElementById(choice).className = "button-chosen";
 	//document.style.backgroundColor = ""
 	openSubmitButton();
 }
@@ -87,32 +105,40 @@ function chooseResponseAllApply(choice) {
 		response = 0;
 	}
 	openSubmitButton();
-	let bgColor;
-	console.log(response & choice);
+	let className;
 	if( (response & choice) == 0) {
-		bgColor = "#008CBA";
+		className = "button-chosen";
 		response += choice;
 	} else {
-		bgColor = "revert";
+		className = "button";
 		response -= choice;
 	}
-	document.getElementById(choice).style.backgroundColor = bgColor;
+	document.getElementById(choice).className = className;
 	if(response == 0) {
 		closeSubmitButton();
 	}
 }
 
+function chooseResponseFRQ() {
+	response = document.getElementById("frq-text").value;
+	document.getElementById("frq-length").innerHTML = Question.FRQ_MAX_LENGTH - response.length;
+	if(response == "") {
+		closeSubmitButton();
+	} else {
+		openSubmitButton();
+	}
+}
+
 function openSubmitButton() {
-	document.getElementById("Submit").innerHTML = "<input type='Submit' onclick='addQuestionResponse()'>";
+	document.getElementById("Submit").innerHTML = "<input type='Submit' onclick='addQuestionAnswer()'>";
 }
 
 function closeSubmitButton() {
 	document.getElementById("Submit").innerHTML = "";
 }
 
-function addQuestionResponse() {
-	alert("Response is: " + response);
-	AnsweringAQuestionController.addQuestionResponse(question, response);
+function addQuestionAnswer() {
+	AnsweringAQuestionController.addQuestionAnswer(question, CF_ADMIN_ACCT_ID, response);
 }
 
 function addQuestionRating() {

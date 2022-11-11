@@ -2,6 +2,31 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="style.css">
+		<style>
+			.question-block {
+				margin-top: 10%;
+				margin-left: 25%;
+				margin-right: 25%;
+				background-color: rgb(226, 226, 226);
+			}
+			.question {
+				text-align: center;
+			}
+			.flex-between {
+				display: flex;
+            	justify-content: space-between;
+			}
+			.button {
+				text-align: left;
+				background-color: revert;
+				margin-right: 1.5%;
+			}
+			.button-chosen {
+				text-align: left;
+				background-color: #008CBA;
+				margin-right: 1.5%;
+			}
+		</style>
 	</head>
 	<body onload="buildQuestion()">
 		<p id="TopBand">
@@ -9,17 +34,24 @@
 				<input type="button" value="home">
 			</a>
 		</p>
-		<p id="Question"></p>
-		<p>
-			<a href="Question.html">
-				<input type="button" value="skip">
-			</a>
-			<p id="Submit"></p>
-		</p>
+		<div class="question-block">
+			<p id="Question">
+				
+			</p>
+			<p>
+				<div class="flex-between">
+					<a href="Question.html" class="skip">
+						<input href="Question.html" type="button" style="align-self: left;" value="skip" class="button">
+					</a>
+					<div' id="Submit" class="submit"></div>
+				</div>
+			</p>
+		</div>
 	</body>
 
 	<script type="text/javascript" src="../src/AnsweringAQuestionGUI.js"></script>
 	<script type="text/javascript" src="../src/AnsweringAQuestionController.js"></script>
 	<script type="text/javascript" src="../src/Question.js"></script>
+	<script type="text/javascript" src="../src/QuestionAnswer.js"></script>
 	<script type="text/javascript" src="../src/DatabaseManager.js"></script>
 </html>

@@ -4,19 +4,40 @@ if(typeof(require) === 'function' ) {
 	const Question = require("./Question.js");
 	const Account = require("./Account.js");
 }
-	class DatabaseManager {
+class DatabaseManager {
+
+	static questions = [
+		new Question(1, Question.QType.mc, "what is your favorite class?", ["math", "science", "social studies", "english"]),
+		new Question(2, Question.QType.all_apply, "which cereals do you like?", ["cheerios", "cinnamon toast crunch", "cocoa puffs", "marshmallow mateys"]),
+		new Question(3, Question.QType.frq, "why do you hate math?", )
+	];
+
+	static questionAnswers = [
+		new QuestionAnswer(1, -659_552_692, 1),
+		new QuestionAnswer(1, 2, 2),
+		new QuestionAnswer(1, 3, 4),
+		new QuestionAnswer(2, 2, 2),
+		new QuestionAnswer(2, -659_552_692, 15),
+		new QuestionAnswer(2, 1, 5),
+		new QuestionAnswer(3, 4, "math sucks"),
+		new QuestionAnswer(3, -659_552_692, "I don't hate math"),
+	];
 
 	/**
 	 * @description get a Question from ID
 	 * 
-	 * @param {number} QID 
+	 * @param {number} qid 
 	 * 
 	 * @return {Question}
 	 * 
 	 * @todo implement
 	 */
-	static getQuestionFromQID(QID) {
-
+	static getQuestionFromQID(qid) {
+		for(let i in this.questions) {
+			if(this.questions[i].id == qid){
+				return this.questions[i];
+			}
+		}
 	}
 
 	/**
@@ -28,7 +49,8 @@ if(typeof(require) === 'function' ) {
 	 * @todo implement
 	 */
 	static getRandomQuestion() {
-		return new Question(-1, Question.QType.all_apply, "all apply", ['0', '1', '2', '3'] );
+		let index = Math.floor(Math.random() * DatabaseManager.questions.length);
+		return DatabaseManager.questions[index];
 	}
 
 	/**
@@ -97,6 +119,8 @@ if(typeof(require) === 'function' ) {
 	 * @todo implement
 	 */
 	static addQuestionAnswer(questionAnswer) {
+		this.questionAnswers.push(questionAnswer);
+		console.log(this.questionAnswers);
 		return 0
 	}
 

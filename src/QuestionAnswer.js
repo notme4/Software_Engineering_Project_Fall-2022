@@ -1,6 +1,8 @@
-const Question = require("./Question.js");
-
-class QuestionAnswer extends Question {
+if(typeof(require) === 'function' ) {
+	const Question = require("./Question.js");
+}
+class QuestionAnswer {
+	qid;
 	acctID;
 	response;
 
@@ -10,14 +12,11 @@ class QuestionAnswer extends Question {
 	 * @constructor
 	 * 
 	 * @param {number} id 
-	 * @param {QType} type 
-	 * @param {string} question 
-	 * @param {string[]} answers 
 	 * @param {number} acctID 
 	 * @param {number|string} response
 	 */
-	constructor(id, type, question, answers, acctID, response) {
-		super(id, type, question, answers);
+	constructor(qid, acctID, response) {
+		this.qid = qid;
 		this.acctID = acctID;
 		this.response = response;
 	}

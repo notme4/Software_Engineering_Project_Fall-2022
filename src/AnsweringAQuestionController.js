@@ -1,4 +1,5 @@
 if(typeof(require) === 'function' ) {
+	const QuestionAnswer = require("./QuestionAnswer");
 	const Question = require("./Question");
 	const DatabaseManager = require("./DatabaseManager");
 }
@@ -25,7 +26,7 @@ class AnsweringAQuestionController {
 	 * @returns {Question}
 	 */
 	static getQuestionFromQID(QID) {
-		return DatabaseManager.getRandomQuestion(QID);
+		return DatabaseManager.getQuestionFromQID(QID);
 	}
 
 	/**
@@ -33,8 +34,9 @@ class AnsweringAQuestionController {
 	 * 
 	 * @author Connor Funk
 	 * 
-	 * @param {Question|number} question - the question to be answered
-	 * @param {int|string} response - the users response to the question 
+	 * @param {Question} question - the question to be answered
+	 * @param {number} acctID - the id of the account that answered the question
+	 * @param {number | string} response - the users response to the question 
 	 * 
 	 * @returns {number} 0 on success, negative on Database fail
 	 * 
@@ -43,7 +45,7 @@ class AnsweringAQuestionController {
 	 * 
 	 * 
 	 */
-	static addQuestionResponse(question, response){
+	static addQuestionAnswer(question, acctID, response){
 		switch (question.type) {
 			case (Question.QType.mc) :
 				AnsweringAQuestionController.checkValidResponseMC(question, response);
@@ -57,7 +59,7 @@ class AnsweringAQuestionController {
 			default :
 				throw new TypeError("'" + question.type + "'is not a valid type");
 		}
-		return DatabaseManager.addQuestionAnswer(question, response);
+		return DatabaseManager.addQuestionAnswer(new QuestionAnswer(question.id, acctID, response) );
 	}
 
 	/**
@@ -145,7 +147,7 @@ class AnsweringAQuestionController {
 			return -3;
 			// throw "TypeError: '" + rating + "' is not an int";
 		}
-		return DatabaseManager.addQuestionRating(question, rating);
+		return DatabaseManager.addQuestionRating(question.id, rating);
 	}
 }
 
