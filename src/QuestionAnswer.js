@@ -1,6 +1,3 @@
-if(typeof(require) === 'function' ) {
-	const Question = require("./Question.js");
-}
 class QuestionAnswer {
 	qid;
 	acctID;

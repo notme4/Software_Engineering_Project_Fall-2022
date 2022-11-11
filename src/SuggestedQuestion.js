@@ -1,6 +1,7 @@
 const Question = require("./Question.js");
 
-class SuggestedQuestion extends Question {
+class SuggestedQuestion {
+	qid;
 	acctID;
 	date;
 
@@ -10,13 +11,10 @@ class SuggestedQuestion extends Question {
 	 * @constructor
 	 * 
 	 * @param {number} id 
-	 * @param {QType} type 
-	 * @param {string} question 
-	 * @param {string[]} answers 
 	 * @param {number} acctID 
 	 */
-	constructor(id, type, question, answers, acctID) {
-		super(id, type, question, answers);
+	constructor(id, acctID) {
+		this.qid = id;
 		this.acctID = acctID;
 		this.date = new Date();
 	}
