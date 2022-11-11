@@ -3,13 +3,14 @@ if(typeof(require) === 'function' ) {
 	const Question = require("../src/Question");
 }
 
-let CF_ADMIN_ACCT_ID = -1;
-let question;
-let response;
 const LOWER_CASE = 97;
 const UPPER_CASE = 65;
+const ERR_ACCT_ID = -1;
+let acctID = ERR_ACCT_ID;
+let question;
+let response;
 
-function LoadQuestion() {
+function LoadPage() {
 	srch = window.location.search;
 	if(srch.length > 0) {
 		regex = /\??qid=-?\d+/;
@@ -25,10 +26,10 @@ function LoadQuestion() {
 	if(typeof(question) !== 'object' || !(question instanceof Question) ) {
 		question = AnsweringAQuestionController.getRandomQuestion();
 	}
+	buildQuestion();
 }
 
 function buildQuestion() {
-	LoadQuestion();
 	let result = "<h1 class='question'>" + question.question + "</h1>\n"
 	switch(question.type) {
 		case (Question.QType.mc) :
@@ -51,6 +52,7 @@ function buildQuestion() {
  * 
  * @author Connor Funk
  * 
+ * @todo switch to radio
  */
 function buildMCQuestion() {
 	let result = "";
@@ -82,7 +84,7 @@ function buildAllApplyQuestion() {
 
 function buildFRQuestion() {
 	let result = "<div style='text-align: center;'>";
-	result += "<textarea id='frq-text' maxlength='" + Question.FRQ_MAX_LENGTH + "' cols='50' rows='5' wrap='soft' style='resize:none;' oninput='chooseResponseFRQ()'></textarea>\n";
+	result += "<textarea id='frq-text' maxlength='" + Question.FRQ_MAX_LENGTH + "' cols='50' rows='5' wrap='soft' style='resize:none;' oninput='chooseResponseFRQ()' autofocus></textarea>\n";
 	result += "<div style='text-align: right; margin-right: 18%; margin-top: -3%;'>";
 	result += "<p id='frq-length'>" + Question.FRQ_MAX_LENGTH + "</p>"
 	return result + "</div>";
@@ -136,7 +138,24 @@ function closeSubmitButton() {
 }
 
 function addQuestionAnswer() {
-	AnsweringAQuestionController.addQuestionAnswer(question, CF_ADMIN_ACCT_ID, response);
+	AnsweringAQuestionController.addQuestionAnswer(question, acctID, response);
+	document.getElementById("next").innerHTML = "<a href='home.html' class=''>" +
+													"<input type='button' value='home' class='button'>" +
+												"</a>" + 
+												"<a href='Question.html?qid=random' class='new_question'>" +
+													"<input type='button' value='New Question' class='button'>" +
+												"</a>";
+	document.getElementById("rating").innerHTML = "<input id='star5' name='rate' type='radio' value='5' oninput='AnsweringAQuestionController.addRating(question, 5)'>" +
+													"<label for='star5' title='5'></label>" +
+													"<input id='star4' name='rate' type='radio' value='4' oninput='AnsweringAQuestionController.addRating(question, 4)'>" +
+													"<label for='star4' title='4'></label>" +
+													"<input id='star3' name='rate' type='radio' value='3' oninput='AnsweringAQuestionController.addRating(question, 3)'>" +
+													"<label for='star3' title='3'></label>" +
+													"<input id='star2' name='rate' type='radio' value='2' oninput='AnsweringAQuestionController.addRating(question, 2)'>" +
+													"<label for='star2' title='2'></label>" +
+													"<input id='star1' name='rate' type='radio' value='1' oninput='AnsweringAQuestionController.addRating(question, 1)'>" +
+													"<label for='star1' title='1'></label>";
+
 }
 
 function addQuestionRating() {

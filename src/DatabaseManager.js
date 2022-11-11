@@ -7,7 +7,7 @@ if(typeof(require) === 'function' ) {
 class DatabaseManager {
 
 	static questions = [
-		new Question(1, Question.QType.mc, "what is your favorite class?", ["math", "science", "social studies", "english"]),
+		new Question(1, Question.QType.mc, "what is your favorite class?", ["science", "social studies", "english" + "</p>\n</div>\n<div display='inline-block'>\n<input id='3' type='button' value='" + String.fromCharCode(68) + "' class='button' style='border-radius: 50%;'>\n<p'>math"] ),
 		new Question(2, Question.QType.all_apply, "which cereals do you like?", ["cheerios", "cinnamon toast crunch", "cocoa puffs", "marshmallow mateys"]),
 		new Question(3, Question.QType.frq, "why do you hate math?", )
 	];
@@ -191,7 +191,7 @@ class DatabaseManager {
 	/**
 	 * @description add rating for a Question
 	 * 
-	 * @param {Question|number} question
+	 * @param {number} question
 	 * @param {number} rating
 	 * 
 	 * @return {number} 0 for success, negative for failure
@@ -199,6 +199,7 @@ class DatabaseManager {
 	 * @todo implement 
 	 */
 	static addQuestionRating(question, rating) {
+		alert(rating);
 		return 0;
 	}
 

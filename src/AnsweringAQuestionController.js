@@ -140,9 +140,9 @@ class AnsweringAQuestionController {
 		if(typeof(rating) !== 'number') {
 			return -1;
 			// throw "TypeError: '" + rating + "' is not 'number'";
-		} else if(rating <  0 || rating >= 10) {
+		} else if(rating <=  0 || rating > 5) {
 			return -2;
-			// throw "RangeError: '" + rating + "' is out of range [0,9]";
+			// throw "RangeError: '" + rating + "' is out of range [1,5]";
 		} else if(rating % 1 !== 0) {
 			return -3;
 			// throw "TypeError: '" + rating + "' is not an int";

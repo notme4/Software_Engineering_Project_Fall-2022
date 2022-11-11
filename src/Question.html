@@ -9,12 +9,53 @@
 				margin-right: 25%;
 				background-color: rgb(226, 226, 226);
 			}
+			.rating {
+				display: flex;
+				flex-direction: row-reverse;
+				justify-content: center;
+				float: center;
+				height: 2%;
+				padding: 0 10px;
+			}
+			.rating:not(:checked) > input {
+				position:absolute;
+				top:-9999px;
+			}
+			.rating:not(:checked) > label {
+				font-size: 30px;
+				width: 1em;
+				overflow: hidden;
+				white-space: nowrap;
+				cursor: pointer;
+				color: #ccc;
+			}
+			.rating:not(:checked) > label:before {
+				content: '★';
+			}
+			.rating > input:checked ~ label {
+				color: #ffc700;    
+			}
+			.rating:not(:checked) > label:hover,
+			.rating:not(:checked) > label:hover ~ label {
+				color: #deb217;  
+			}
+			.rating > input:checked ~ label:hover,
+			.rating > input:checked ~ label:hover ~ label,
+			.rating > label:hover ~ input:checked ~ label {
+				color: #c59b08;
+			}
 			.question {
 				text-align: center;
 			}
-			.flex-between {
+			.flex {
 				display: flex;
+			}
+			.flex-between {
             	justify-content: space-between;
+			}
+			.next-button-block {
+				margin-left: 25%;
+				margin-right: 25%;
 			}
 			.button {
 				text-align: left;
@@ -32,7 +73,7 @@
 			}
 		</style>
 	</head>
-	<body onload="buildQuestion()">
+	<body onload="LoadPage();">
 		<p id="TopBand">
 			<a href="home.html">
 				<input type="button" value="home">
@@ -43,13 +84,19 @@
 				
 			</p>
 			<p>
-				<div class="flex-between">
-					<a href="Question.html" class="skip">
-						<input href="Question.html" type="button" style="align-self: left;" value="skip" class="button">
+				<div class="flex flex-between">
+					<a href="Question.html?qid=random" class="new_question">
+						<input type="button" value="skip" class="button">
 					</a>
 					<div' id="Submit" class="submit"></div>
 				</div>
 			</p>
+		</div>
+		<form id="rating" class="rating" style="text-align: center;">
+			
+		</form>
+		<div id="next" class="flex flex-between next-button-block">
+			
 		</div>
 	</body>
 
