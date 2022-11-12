@@ -1,8 +1,8 @@
 class QuestionAnswer {
 	qid;
 	acctID;
-	response;
-
+	answer;
+	
 	/**
 	 * @author Connor Funk
 	 * 
@@ -10,12 +10,12 @@ class QuestionAnswer {
 	 * 
 	 * @param {number} id 
 	 * @param {number} acctID 
-	 * @param {number|string} response
+	 * @param {number|string} answer 
 	 */
-	constructor(qid, acctID, response) {
+	constructor(qid, acctID, answer) {
 		this.qid = qid;
 		this.acctID = acctID;
-		this.response = response;
+		this.answer = answer;
 	}
 }
 

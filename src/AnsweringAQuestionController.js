@@ -10,10 +10,12 @@ class AnsweringAQuestionController {
 	 * 
 	 * @author Connor Funk
 	 * 
+	 * @param {number} acctID
+	 * 
 	 * @returns {Question} 
 	 */
-	static getRandomQuestion() {
-		return DatabaseManager.getRandomQuestion();
+	static getRandomQuestion(acctID) {
+		return DatabaseManager.getRandomQuestion(acctID);
 	}
 
 	/**
@@ -48,13 +50,13 @@ class AnsweringAQuestionController {
 	static addQuestionAnswer(question, acctID, response){
 		switch (question.type) {
 			case (Question.QType.mc) :
-				AnsweringAQuestionController.checkValidResponseMC(question, response);
+				AnsweringAQuestionController.verifyMCQAnswer(question, response);
 				break;
 			case (Question.QType.all_apply) :
-				AnsweringAQuestionController.checkValidResponseAllApply(question, response);
+				AnsweringAQuestionController.verifyAllApplyAnswer(question, response);
 				break;
 			case (Question.QType.frq) :
-				AnsweringAQuestionController.checkValidResponseFRQ(question, response);
+				AnsweringAQuestionController.verifyFRQAnswer(question, response);
 				break;
 			default :
 				throw new TypeError("'" + question.type + "'is not a valid type");
@@ -74,7 +76,7 @@ class AnsweringAQuestionController {
 	 * @throws {RangeError} when response is not a valid response
 	 * 
 	 */
-	static checkValidResponseMC(question, response) {
+	static verifyMCQAnswer(question, response) {
 		if(typeof(response) !== 'number') {
 			throw new TypeError("'" + response + "' is not 'number'");
 		} else if( response % 1 !== 0) {
@@ -95,7 +97,7 @@ class AnsweringAQuestionController {
 	 * @throws {TypeError} when response is not an integer
 	 * @throws {RangeError} when response is not a valid response
 	 */
-	static checkValidResponseAllApply(question, response) {
+	static verifyAllApplyAnswer(question, response) {
 		if(typeof(response) !== 'number') {
 			throw new TypeError("'" + response + "' is not 'number'");
 		} else if( response % 1 !== 0) {
@@ -116,7 +118,7 @@ class AnsweringAQuestionController {
 	 * @throws {TypeError} when response is not a string
 	 * @throws {RangeError} when response is empty or too long
 	 */
-	static checkValidResponseFRQ(question, response) {
+	static verifyFRQAnswer(question, response) {
 		if(typeof(response) !== 'string') {
 			throw new TypeError("'" + response + "' is not 'string'");
 		} else if( response.length === 0) {
@@ -136,7 +138,7 @@ class AnsweringAQuestionController {
 	 * @throws {TypeError} when rating is not an integer
 	 * @throws {RangeError} when 0 <= rating <= 9 is false
 	 */
-	static addRating(question, rating) {
+	static addQuestionRating(question, rating) {
 		if(typeof(rating) !== 'number') {
 			return -1;
 			// throw "TypeError: '" + rating + "' is not 'number'";

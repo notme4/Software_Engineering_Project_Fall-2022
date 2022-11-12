@@ -44,11 +44,13 @@ class DatabaseManager {
 	 * @description get a random Question
 	 * NOTE: must not be a suggested Question
 	 * 
+	 * @param {number} acctID
+	 * 
 	 * @return {Question}
 	 * 
 	 * @todo implement
 	 */
-	static getRandomQuestion() {
+	static getRandomQuestion(acctID) {
 		let index = Math.floor(Math.random() * DatabaseManager.questions.length);
 		return DatabaseManager.questions[index];
 	}
@@ -127,13 +129,13 @@ class DatabaseManager {
 	/**
 	 * @description get a suggested question that has ID QID
 	 * 
-	 * @param {number} QID 
+	 * @param {number} qid 
 	 * 
 	 * @return {SuggestedQuestion}
 	 * 
 	 * @todo implement
 	 */
-	static getSuggestedQuestion(QID) {
+	static getSuggestedQuestion(qid) {
 
 	}
 
@@ -191,14 +193,14 @@ class DatabaseManager {
 	/**
 	 * @description add rating for a Question
 	 * 
-	 * @param {number} question
+	 * @param {number} qid
 	 * @param {number} rating
 	 * 
 	 * @return {number} 0 for success, negative for failure
 	 * 
 	 * @todo implement 
 	 */
-	static addQuestionRating(question, rating) {
+	static addQuestionRating(qid, rating) {
 		alert(rating);
 		return 0;
 	}

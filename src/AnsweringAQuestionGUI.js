@@ -5,8 +5,7 @@ if(typeof(require) === 'function' ) {
 
 const LOWER_CASE = 97;
 const UPPER_CASE = 65;
-const ERR_ACCT_ID = -1;
-let acctID = ERR_ACCT_ID;
+let acctID = -1;
 let question;
 let response;
 
@@ -30,7 +29,7 @@ function LoadPage() {
 	}
 
 	if(typeof(question) !== 'object' || !(question instanceof Question) ) {
-		question = AnsweringAQuestionController.getRandomQuestion();
+		question = AnsweringAQuestionController.getRandomQuestion(acctID);
 	}
 	buildQuestion();
 }
@@ -212,15 +211,15 @@ function addQuestionAnswer() {
 												"<a href='Question.html?qid=random' class='new_question'>" +
 													"<input type='button' value='New Question' class='button'>" +
 												"</a>";
-	document.getElementById("rating").innerHTML = "<input id='star5' name='rate' type='radio' value='5' oninput='AnsweringAQuestionController.addRating(question, 5)'>" +
+	document.getElementById("rating").innerHTML = "<input id='star5' name='rate' type='radio' value='5' oninput='AnsweringAQuestionController.addQuestionRating(question, 5)'>" +
 													"<label for='star5' title='5'></label>" +
-													"<input id='star4' name='rate' type='radio' value='4' oninput='AnsweringAQuestionController.addRating(question, 4)'>" +
+													"<input id='star4' name='rate' type='radio' value='4' oninput='AnsweringAQuestionController.addQuestionRating(question, 4)'>" +
 													"<label for='star4' title='4'></label>" +
-													"<input id='star3' name='rate' type='radio' value='3' oninput='AnsweringAQuestionController.addRating(question, 3)'>" +
+													"<input id='star3' name='rate' type='radio' value='3' oninput='AnsweringAQuestionController.addQuestionRating(question, 3)'>" +
 													"<label for='star3' title='3'></label>" +
-													"<input id='star2' name='rate' type='radio' value='2' oninput='AnsweringAQuestionController.addRating(question, 2)'>" +
+													"<input id='star2' name='rate' type='radio' value='2' oninput='AnsweringAQuestionController.addQuestionRating(question, 2)'>" +
 													"<label for='star2' title='2'></label>" +
-													"<input id='star1' name='rate' type='radio' value='1' oninput='AnsweringAQuestionController.addRating(question, 1)'>" +
+													"<input id='star1' name='rate' type='radio' value='1' oninput='AnsweringAQuestionController.addQuestionRating(question, 1)'>" +
 													"<label for='star1' title='1'></label>";
 
 }
