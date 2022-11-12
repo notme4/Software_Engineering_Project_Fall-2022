@@ -58,7 +58,7 @@ class AnsweringAQuestionControllerTest {
 		assertReturn(0, () => AnsQController.addRating(q, 2) );
 
 		assertReturn(-2, () => AnsQController.addRating(q, -1) );
-		assertReturn(-2, () => AnsQController.addRating(q, 10) );
+		assertReturn(-2, () => AnsQController.addRating(q, 6) );
 		assertReturn(-3, () => AnsQController.addRating(q, 0.5) );
 		assertReturn(-1, () => AnsQController.addRating(q, ) );
 		assertReturn(-1, () => AnsQController.addRating(q, "test") );

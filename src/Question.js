@@ -4,7 +4,12 @@ class Question {
 	question;
 	answers;
 
-	static FRQ_MAX_LENGTH = 4;
+	static FRQ_MAX_LENGTH = 200;
+
+	static getFRQMaxLength() {
+		alert('getFRQMaxLength')
+		return this.FRQ_MAX_LENGTH;
+	}
 
 	/**
 	 * @description The types that Question can have
@@ -42,4 +47,6 @@ class Question {
 	}
 }
 
-module.exports = Question;
+if(typeof(module) === 'object') {
+	module.exports = Question;
+}

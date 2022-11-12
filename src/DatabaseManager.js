@@ -1,20 +1,43 @@
-const SuggestedQuestion = require("./SuggestedQuestion.js");
-const QuestionAnswer = require("./QuestionAnswer.js");
-const Question = require("./Question.js");
-const Account = require("./Account.js");
+if(typeof(require) === 'function' ) {
+	const SuggestedQuestion = require("./SuggestedQuestion.js");
+	const QuestionAnswer = require("./QuestionAnswer.js");
+	const Question = require("./Question.js");
+	const Account = require("./Account.js");
+}
 class DatabaseManager {
+
+	static questions = [
+		new Question(1, Question.QType.mc, "what is your favorite class?", ["science", "social studies", "english" + "</p>\n</div>\n<div display='inline-block'>\n<input id='3' type='button' value='" + String.fromCharCode(68) + "' class='button' style='border-radius: 50%;'>\n<p'>math"] ),
+		new Question(2, Question.QType.all_apply, "which cereals do you like?", ["cheerios", "cinnamon toast crunch", "cocoa puffs", "marshmallow mateys"]),
+		new Question(3, Question.QType.frq, "why do you hate math?", )
+	];
+
+	static questionAnswers = [
+		new QuestionAnswer(1, -659_552_692, 1),
+		new QuestionAnswer(1, 2, 2),
+		new QuestionAnswer(1, 3, 4),
+		new QuestionAnswer(2, 2, 2),
+		new QuestionAnswer(2, -659_552_692, 15),
+		new QuestionAnswer(2, 1, 5),
+		new QuestionAnswer(3, 4, "math sucks"),
+		new QuestionAnswer(3, -659_552_692, "I don't hate math"),
+	];
 
 	/**
 	 * @description get a Question from ID
 	 * 
-	 * @param {number} QID 
+	 * @param {number} qid 
 	 * 
 	 * @return {Question}
 	 * 
 	 * @todo implement
 	 */
-	static getQuestion(QID) {
-
+	static getQuestionFromQID(qid) {
+		for(let i in this.questions) {
+			if(this.questions[i].id == qid){
+				return this.questions[i];
+			}
+		}
 	}
 
 	/**
@@ -25,8 +48,9 @@ class DatabaseManager {
 	 * 
 	 * @todo implement
 	 */
-	static getQuestion() {
-
+	static getRandomQuestion() {
+		let index = Math.floor(Math.random() * DatabaseManager.questions.length);
+		return DatabaseManager.questions[index];
 	}
 
 	/**
@@ -95,6 +119,8 @@ class DatabaseManager {
 	 * @todo implement
 	 */
 	static addQuestionAnswer(questionAnswer) {
+		this.questionAnswers.push(questionAnswer);
+		console.log(this.questionAnswers);
 		return 0
 	}
 
@@ -165,7 +191,7 @@ class DatabaseManager {
 	/**
 	 * @description add rating for a Question
 	 * 
-	 * @param {Question|number} question
+	 * @param {number} question
 	 * @param {number} rating
 	 * 
 	 * @return {number} 0 for success, negative for failure
@@ -173,6 +199,7 @@ class DatabaseManager {
 	 * @todo implement 
 	 */
 	static addQuestionRating(question, rating) {
+		alert(rating);
 		return 0;
 	}
 
@@ -187,7 +214,7 @@ class DatabaseManager {
 	 * 
 	 * @todo implement
 	 */
-	static getAccount(AcctID) {
+	static getAccountFromAcctID(AcctID) {
 
 	}
 
@@ -201,7 +228,7 @@ class DatabaseManager {
 	 * 
 	 * @todo implement
 	 */
-	static getAccount(username, password) {
+	static getAccountFromUsernamePassword(username, password) {
 
 	}
 
@@ -217,4 +244,6 @@ class DatabaseManager {
 	}
 }
 
-module.exports = DatabaseManager;
+if(typeof(module) === 'object') {
+	module.exports = DatabaseManager;
+}
