@@ -1,3 +1,4 @@
 # ignore test files
 # test/**
 # **/*.test.js
+ignore/
