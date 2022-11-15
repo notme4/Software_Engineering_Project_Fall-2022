@@ -1,7 +1,7 @@
 if(typeof(require) === 'function' ) {
 	const SuggestedQuestion = require("./SuggestedQuestion.js");
 	const QuestionAnswer = require("./QuestionAnswer.js");
-	const Question = require("./Question.js");
+	const Question = require("./Question");
 	const Account = require("./Account.js");
 }
 class DatabaseManager {
@@ -38,6 +38,8 @@ class DatabaseManager {
 				return this.questions[i];
 			}
 		}
+		return -1;
+
 	}
 
 	/**

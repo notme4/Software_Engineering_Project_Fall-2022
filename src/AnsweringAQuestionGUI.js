@@ -17,19 +17,24 @@ let response;
  */
 function LoadPage() {
 	srch = window.location.search;
-	if(srch.length > 0) {
-		regex = /\??qid=-?\d+/;
-		qid = srch.split('&').find(element => regex.test(element) );
-		if(typeof(qid) === 'string') {
-			while(!qid.charAt(0).match(/[\d-]/) ) {
-				qid = qid.substring(1);
-			}
-			question = AnsweringAQuestionController.getQuestionFromQID(Number.parseInt(qid) );
-		}
+	if(srch.length == 0) {
+		question = AnsweringAQuestionController.getRandomQuestion(acctID)
+		window.location.href = "Question.html?qid=" + question.id;
+	}
+	regex = /\??qid=-?\d+/;
+	qid = srch.split('&').find(element => regex.test(element) );
+	while(qid && !qid.charAt(0).match(/[-\d]/) ) {
+		qid = qid.substring(1);
+	}
+	question = AnsweringAQuestionController.getQuestionFromQID(Number.parseInt(qid) );
+	
+	if(question == -1) {
+		question = AnsweringAQuestionController.getRandomQuestion(acctID)
+		window.location.href = "Question.html?qid=" + question.id;
 	}
 
-	if(typeof(question) !== 'object' || !(question instanceof Question) ) {
-		question = AnsweringAQuestionController.getRandomQuestion(acctID);
+	if(srch.length == 0) {
+		window.location.href = "Question.html?qid=random";
 	}
 	buildQuestion();
 }
