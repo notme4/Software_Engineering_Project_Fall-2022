@@ -1,28 +1,54 @@
-if(typeof(require) === 'function' ) {
-	const SuggestedQuestion = require("./SuggestedQuestion.js");
-	const QuestionAnswer = require("./QuestionAnswer.js");
-	const Question = require("./Question.js");
-	const Account = require("./Account.js");
-}
+const SuggestedQuestion = require("./SuggestedQuestion.js");
+const QuestionAnswer = require("./QuestionAnswer.js");
+const Question = require("./Question");
+const Account = require("./Account.js");
+const fs = require("fs");
 class DatabaseManager {
+	static DBFolder = "./src/DB"
+	static questionsFile = this.DBFolder + "/questions.json"
+	static answersFile = this.DBFolder + "/answers.json"
+	static accountsFile = this.DBFolder + "/accounts.json"
+	static suggestionsFile = this.DBFolder + "/suggestions.json"
+	static ratingsFile = this.DBFolder + "/ratings.json"
+	static questions;
+	static answers;
+	static accounts;
+	static suggestions;
+	static ratings;
 
-	static questions = [
-		new Question(1, Question.QType.mc, "what is your favorite class?", ["science", "social studies", "english" + "</p>\n</div>\n<div display='inline-block'>\n<input id='3' type='button' value='" + String.fromCharCode(68) + "' class='button' style='border-radius: 50%;'>\n<p'>math"] ),
-		new Question(2, Question.QType.all_apply, "which cereals do you like?", ["cheerios", "cinnamon toast crunch", "cocoa puffs", "marshmallow mateys"]),
-		new Question(3, Question.QType.frq, "why do you hate math?", )
-	];
-
-	static questionAnswers = [
-		new QuestionAnswer(1, -659_552_692, 1),
-		new QuestionAnswer(1, 2, 2),
-		new QuestionAnswer(1, 3, 4),
-		new QuestionAnswer(2, 2, 2),
-		new QuestionAnswer(2, -659_552_692, 15),
-		new QuestionAnswer(2, 1, 5),
-		new QuestionAnswer(3, 4, "math sucks"),
-		new QuestionAnswer(3, -659_552_692, "I don't hate math"),
-	];
-
+	static initialize() {
+		fs.readFile(this.questionsFile, (err, data) => {
+			if(err) {
+				console.error(err) 
+			}
+			this.questions = JSON.parse(data);
+		})
+		fs.readFile(this.answersFile, (err, data) => {
+			if(err) {
+				console.error(err) 
+			}
+			this.answers = JSON.parse(data);
+		})
+		fs.readFile(this.accountsFile, (err, data) => {
+			if(err) {
+				console.error(err) 
+			}
+			this.accounts = JSON.parse(data);
+		})
+		fs.readFile(this.suggestionsFile, (err, data) => {
+			if(err) {
+				console.error(err) 
+			}
+			this.suggestions = JSON.parse(data);
+		})
+		fs.readFile(this.ratingsFile, (err, data) => {
+			if(err) {
+				console.error(err) 
+			}
+			this.ratings = JSON.parse(data);
+		})
+	}
+	
 	/**
 	 * @description get a Question from ID
 	 * 
@@ -30,7 +56,6 @@ class DatabaseManager {
 	 * 
 	 * @return {Question}
 	 * 
-	 * @todo implement
 	 */
 	static getQuestionFromQID(qid) {
 		for(let i in this.questions) {
@@ -38,17 +63,20 @@ class DatabaseManager {
 				return this.questions[i];
 			}
 		}
+		throw new Error("invalid qid: " + qid)
+
 	}
 
 	/**
 	 * @description get a random Question
 	 * NOTE: must not be a suggested Question
 	 * 
+	 * @param {number} acctID
+	 * 
 	 * @return {Question}
 	 * 
-	 * @todo implement
 	 */
-	static getRandomQuestion() {
+	static getRandomQuestion(acctID) {
 		let index = Math.floor(Math.random() * DatabaseManager.questions.length);
 		return DatabaseManager.questions[index];
 	}
@@ -119,21 +147,29 @@ class DatabaseManager {
 	 * @todo implement
 	 */
 	static addQuestionAnswer(questionAnswer) {
-		this.questionAnswers.push(questionAnswer);
-		console.log(this.questionAnswers);
+		this.answers.push(questionAnswer);
+		console.log(this.answers)
+		fs.writeFile(this.answersFile, JSON.stringify(this.answers), err => {
+			console.log("in write");
+			if(err) {
+				console.error(err);
+				return -1
+			}
+		});
+		console.log("after write");
 		return 0
 	}
 
 	/**
 	 * @description get a suggested question that has ID QID
 	 * 
-	 * @param {number} QID 
+	 * @param {number} qid 
 	 * 
 	 * @return {SuggestedQuestion}
 	 * 
 	 * @todo implement
 	 */
-	static getSuggestedQuestion(QID) {
+	static getSuggestedQuestion(qid) {
 
 	}
 
@@ -191,15 +227,15 @@ class DatabaseManager {
 	/**
 	 * @description add rating for a Question
 	 * 
-	 * @param {number} question
+	 * @param {number} qid
 	 * @param {number} rating
 	 * 
 	 * @return {number} 0 for success, negative for failure
 	 * 
 	 * @todo implement 
 	 */
-	static addQuestionRating(question, rating) {
-		alert(rating);
+	static addQuestionRating(qid, rating) {
+		console.log(rating);
 		return 0;
 	}
 

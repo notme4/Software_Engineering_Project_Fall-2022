@@ -1,3 +1,5 @@
 # ignore test files
 # test/**
 # **/*.test.js
+ignore/
+node_modules/

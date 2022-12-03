@@ -1,0 +1,19 @@
+[
+	{
+		"id":	-1,
+		"type":	"mc",
+		"question":	"what is your favorite class?",
+		"answers": ["science", "social studies", "english", "math"]
+	},
+	{
+		"id":	-2,
+		"type":	"all_apply",
+		"question":	"which cereals do you like?",
+		"answers": ["cheerios", "cinnamon toast crunch", "cocoa puffs", "marshmallow mateys"]
+	},
+	{
+		"id":	-3,
+		"type":	"frq",
+		"question":	"why do you hate math?"
+	}
+]

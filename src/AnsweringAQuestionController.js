@@ -1,19 +1,21 @@
-if(typeof(require) === 'function' ) {
-	const QuestionAnswer = require("./QuestionAnswer");
-	const Question = require("./Question");
-	const DatabaseManager = require("./DatabaseManager");
-}
+
 class AnsweringAQuestionController {
+	static QuestionAnswer = require("./QuestionAnswer");
+	static Question = require("./Question");
+	static DatabaseManager = require("./DatabaseManager");
 
 	/**
 	 * @description gets a random question from the database
 	 * 
 	 * @author Connor Funk
 	 * 
+	 * @param {number} acctID
+	 * 
 	 * @returns {Question} 
 	 */
-	static getRandomQuestion() {
-		return DatabaseManager.getRandomQuestion();
+	static getRandomQuestion(acctID) {
+		const DatabaseManager = require("./DatabaseManager");
+		return DatabaseManager.getRandomQuestion(acctID);
 	}
 
 	/**
@@ -26,6 +28,7 @@ class AnsweringAQuestionController {
 	 * @returns {Question}
 	 */
 	static getQuestionFromQID(QID) {
+		const DatabaseManager = require("./DatabaseManager");
 		return DatabaseManager.getQuestionFromQID(QID);
 	}
 
@@ -46,20 +49,25 @@ class AnsweringAQuestionController {
 	 * 
 	 */
 	static addQuestionAnswer(question, acctID, response){
+		let qa;
+		console.log("response: " + response)
 		switch (question.type) {
-			case (Question.QType.mc) :
-				AnsweringAQuestionController.checkValidResponseMC(question, response);
+			case (this.Question.QType.mc) :
+				AnsweringAQuestionController.verifyMCQAnswer(question, parseInt(response));
+				qa = new this.QuestionAnswer(question.id, acctID, parseInt(response));
 				break;
-			case (Question.QType.all_apply) :
-				AnsweringAQuestionController.checkValidResponseAllApply(question, response);
+			case (this.Question.QType.all_apply) :
+				AnsweringAQuestionController.verifyAllApplyAnswer(question, parseInt(response));
+				qa = new this.QuestionAnswer(question.id, acctID, parseInt(response));
 				break;
-			case (Question.QType.frq) :
-				AnsweringAQuestionController.checkValidResponseFRQ(question, response);
+			case (this.Question.QType.frq) :
+				AnsweringAQuestionController.verifyFRQAnswer(question, response);
+				qa = new this.QuestionAnswer(question.id, acctID, response);
 				break;
 			default :
 				throw new TypeError("'" + question.type + "'is not a valid type");
 		}
-		return DatabaseManager.addQuestionAnswer(new QuestionAnswer(question.id, acctID, response) );
+		return this.DatabaseManager.addQuestionAnswer(qa);
 	}
 
 	/**
@@ -68,13 +76,13 @@ class AnsweringAQuestionController {
 	 * @author Connor Funk
 	 * 
 	 * @param {Question} question - the question to be answered
-	 * @param {number} response 
+	 * @param {number} response
 	 * 
 	 * @throws {TypeError} when response is not an integer
 	 * @throws {RangeError} when response is not a valid response
 	 * 
 	 */
-	static checkValidResponseMC(question, response) {
+	static verifyMCQAnswer(question, response) {
 		if(typeof(response) !== 'number') {
 			throw new TypeError("'" + response + "' is not 'number'");
 		} else if( response % 1 !== 0) {
@@ -95,7 +103,7 @@ class AnsweringAQuestionController {
 	 * @throws {TypeError} when response is not an integer
 	 * @throws {RangeError} when response is not a valid response
 	 */
-	static checkValidResponseAllApply(question, response) {
+	static verifyAllApplyAnswer(question, response) {
 		if(typeof(response) !== 'number') {
 			throw new TypeError("'" + response + "' is not 'number'");
 		} else if( response % 1 !== 0) {
@@ -116,12 +124,12 @@ class AnsweringAQuestionController {
 	 * @throws {TypeError} when response is not a string
 	 * @throws {RangeError} when response is empty or too long
 	 */
-	static checkValidResponseFRQ(question, response) {
+	static verifyFRQAnswer(question, response) {
 		if(typeof(response) !== 'string') {
 			throw new TypeError("'" + response + "' is not 'string'");
 		} else if( response.length === 0) {
 			throw new RangeError("response is empty");
-		} else if(response.length > Question.FRQ_MAX_LENGTH) {
+		} else if(response.length > this.Question.FRQ_MAX_LENGTH) {
 			throw new RangeError("'" + response + "' is too long");
 		}
 	}
@@ -136,18 +144,15 @@ class AnsweringAQuestionController {
 	 * @throws {TypeError} when rating is not an integer
 	 * @throws {RangeError} when 0 <= rating <= 9 is false
 	 */
-	static addRating(question, rating) {
+	static addQuestionRating(question, rating) {
 		if(typeof(rating) !== 'number') {
-			return -1;
-			// throw "TypeError: '" + rating + "' is not 'number'";
+			throw "TypeError: '" + rating + "' is not 'number'";
 		} else if(rating <=  0 || rating > 5) {
-			return -2;
-			// throw "RangeError: '" + rating + "' is out of range [1,5]";
+			throw "RangeError: '" + rating + "' is out of range [1,5]";
 		} else if(rating % 1 !== 0) {
-			return -3;
-			// throw "TypeError: '" + rating + "' is not an int";
+			throw "TypeError: '" + rating + "' is not an int";
 		}
-		return DatabaseManager.addQuestionRating(question.id, rating);
+		return this.DatabaseManager.addQuestionRating(question.id, rating);
 	}
 }
 
