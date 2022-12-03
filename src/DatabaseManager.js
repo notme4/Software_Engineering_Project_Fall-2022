@@ -56,7 +56,6 @@ class DatabaseManager {
 	 * 
 	 * @return {Question}
 	 * 
-	 * @todo implement
 	 */
 	static getQuestionFromQID(qid) {
 		for(let i in this.questions) {
@@ -76,7 +75,6 @@ class DatabaseManager {
 	 * 
 	 * @return {Question}
 	 * 
-	 * @todo implement
 	 */
 	static getRandomQuestion(acctID) {
 		let index = Math.floor(Math.random() * DatabaseManager.questions.length);
@@ -155,6 +153,7 @@ class DatabaseManager {
 			console.log("in write");
 			if(err) {
 				console.error(err);
+				return -1
 			}
 		});
 		console.log("after write");
