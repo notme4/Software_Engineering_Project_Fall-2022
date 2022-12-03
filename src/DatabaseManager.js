@@ -105,7 +105,14 @@ class DatabaseManager {
 	 * @todo implement
 	 */
 	static addQuestion(question) {
-
+		this.questions.push(question);
+		fs.writeFile(this.questionssFile, JSON.stringify(this.questions), err => {
+			console.log("in write");
+			if(err) {
+				console.error(err);
+				return -1
+			}
+		});
 	}
 	
 	/**
@@ -194,7 +201,14 @@ class DatabaseManager {
 	 * @todo implement
 	 */
 	static addSuggestedQuestion(suggestedQuestion) {
-
+		this.suggestions.push(suggestedQuestion)
+		fs.writeFile(this.suggestions, JSON.stringify(this.suggestions), err => {
+			console.log("in write");
+			if(err) {
+				console.error(err);
+				return -1
+			}
+		});
 	}
 
 	/**
@@ -235,6 +249,17 @@ class DatabaseManager {
 	 * @todo implement 
 	 */
 	static addQuestionRating(qid, rating) {
+		obj = new Object()
+		obj['qid'] = qid;
+		obj['rating'] = rating;
+		this.ratings.push(obj);
+		fs.writeFile(this.ratingsFile, JSON.stringify(this.ratingg), err => {
+			console.log("in write");
+			if(err) {
+				console.error(err);
+				return -1
+			}
+		});
 		console.log(rating);
 		return 0;
 	}
@@ -276,7 +301,14 @@ class DatabaseManager {
 	 * @todo implement
 	 */
 	static addAccount(account) {
-
+		this.accounts.push(account)
+		fs.writeFile(this.accountsFile, JSON.stringify(this.accounts), err => {
+			console.log("in write");
+			if(err) {
+				console.error(err);
+				return -1
+			}
+		});
 	}
 }
 
