@@ -62,6 +62,21 @@ app.get("/suggest", (req, res) => {
 	res.send({});
 });
 
+app.post("/account", (req, res) => {
+	console.log(req.body);
+	acct = new Account(	req.body.id, 
+						req.body.username, 
+						req.body.password, 
+						req.body.country, 
+						req.body.isAdult,
+						req.body.address,
+						req.body.ethnicity,
+						req.body.gender,
+						req.body.dob)
+	DatabaseManager.addAccount(acct);
+	res.send({});
+});
+
 function loadQuestion(acctID, qid) {
 	return (qid != "random") ?
 		AnsweringAQuestionController.getQuestionFromQID(qid) :
