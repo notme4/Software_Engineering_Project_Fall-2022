@@ -9,12 +9,6 @@ const cors = require('cors');
 const SuggestedQuestion = require("./SuggestedQuestion");
 const port = 3002;
 
-const server = 'http://localhost:3000';
-const questionPage = 'Question';
-const questionPge2 = 'Question2';
-const answerPage = 'AnswerQuestion'
-const style = "style.css"
-
 let question;
 
 app.use( bodyParser.json() );		// to support JSON-encoded bodies
