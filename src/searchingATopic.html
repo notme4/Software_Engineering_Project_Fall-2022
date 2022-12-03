@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+    <meta http-equiv=""X-UA-Compatible" content=""IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/c51c6936c5.js" crossorigin="anonymous"></script>
+    <script type="module" src="searchingATopicController.js" defer></script>
+    <script>  
+      fetch("database.json")
+    </script>
+    <title>Search!</title>
+ </head>
+ <body>
+    <div class="search-wrapper">
+      <form>
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="search" value="" id="search" onchange="openPage()" placeholder="Search a topic!" data-search>
+            <button type="submit">Search</button>
+      </form>
+    </div>
+    <div class="topic-names" data-topic-cards-container></div>  
+    <template data-topic-template>
+      <div class="topics">
+         <div class="topicName" data-topicName></div>
+         <div class="body" data-body></div>
+      </div>
+    </template>
+ </body>
+</html>
