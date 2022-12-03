@@ -61,11 +61,53 @@ function f() {
     var date = document.getElementById("dob").value;
     var d = new Date(date)
 
+	if (username.length < 8)
+	{
+		alert("Username length must be greater than 8 characters.");
+		document.getElementById("name").value = "";
+	}
+
+	if (username.length > 20)
+	{
+		alert("Username length must be less than 20 characters.");
+		document.getElementById("name").value = "";
+	}
+
+    if (password.length < 8)
+	{
+		alert("Password length must be greater than 8 characters.");
+		document.getElementById("password").value = "";
+	}
+
+	if (password.length > 20)
+	{
+		alert("Password length must be less than 20 characters.");
+		document.getElementById("password").value = "";
+	}
+
+	for (let i = 0; i < country.length; i++) {
+		if (country.charAt(i) >= '0' || country.charAt(i) <= '9')
+		{
+			alert("Country Contains Digits");
+			document.getElementById("country").value = "";
+			break;
+		}
+	  }
+
     if (isAdult != "" && username != "" && password != "" && country != "")
 	{
 		var acc = new Account(id, username, password, country, isAdult=="Yes", address, ethnicity, gender, d);
 		alert(JSON.stringify(acc) + "Uploaded to Database");
 		document.location.href = "home.html";
+
+		const request = new Request('.src/DB/accounts.json', {
+			method: 'POST',
+			body: JSON.stringify(acc),
+			headers: {
+			  'Content-Type': 'application/json'
+			}
+		  });
+		fetch(request);
 	}
 	else
 	{
