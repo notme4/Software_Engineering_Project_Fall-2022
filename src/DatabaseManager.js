@@ -276,7 +276,12 @@ class DatabaseManager {
 	 * @todo implement
 	 */
 	static getAccountFromAcctID(AcctID) {
-
+		for(let i in this.accounts) {
+			if(this.questions[i].id == acctID){
+				return this.questions[i];
+			}
+		}
+		throw new Error("invalid qid: " + qid)
 	}
 
 	/**
@@ -290,7 +295,13 @@ class DatabaseManager {
 	 * @todo implement
 	 */
 	static getAccountFromUsernamePassword(username, password) {
-
+		for(let i in this.questions) {
+			if(this.questions[i].username == username &&
+				this.questions[i].password == password){
+				return this.questions[i];
+			}
+		}
+		throw new Error("invalid qid: " + qid)
 	}
 
 	/**
