@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="../style.css">
+		<meta charset="utf-8">
+	<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js'> </script>
+	</head>
+	<body onload="load()">
+		<p id='TopBand'>
+			<a href='home.html'> <input type='button' value='home'> </a>
+		</p>
+		<div class='question-block'>
+			<form id='question-form' class='question' action='http://localhost:3002/answerQuestion' method='POST'>
+				<input id='qid' type='hidden' name='qid'>
+				<input id='acctID' type='hidden' name='acctID'>
+				<input id='response' type='hidden' name='response'>
+				<div id="question"></div>
+				<div class="flex-between">
+					<a class='flex-between new_question' href='Question.html'>
+						<input type='button' value='skip' class='flex-between button'>
+					</a>
+					<div id='Submit' type='Submit' class='flex-between'> </div>
+				</div>
+			</form>
+			<form id='rating-form' action='http://localhost:3002/rating' method="POST" style='text-align: center;'>
+				<input id='qidr' type='hidden' name='qid'>
+				<input id='acctIDr' type='hidden' name='acctID'>
+				<div id="rating" class="rating">
+
+				</div>
+			</form>
+			<div id='next' class='flex-between next-button-block'> </div>
+		</div>
+	</body>
+	<script type='text/javascript'>
+		let response = 0;
+		
+		let params = Object.fromEntries(new URL(document.URL).searchParams.entries());
+		console.log(JSON.stringify(params))
+		$.ajax({
+			type: 'POST',
+			url: 'http://localhost:3002/question',
+			data: params,
+			dataType: 'json',
+			encode: true,
+			success: function(data) {
+				question = data;
+				buildQuestion();
+				console.log('success: ' + JSON.stringify(data));
+				console.log(question.type)
+			},
+			error: function(error) {
+				console.log(error);
+			},
+		})
+	</script>
+	<script type="text/javascript" src="../AnsweringQuestionGUI.js"></script>
+	<script type="text/javascript" src="../Question.js"></script>
+	<script type='text/javascript'>
+		console.log(document.getElementById("question-form") )
+		$(document).ready(() => {
+			$("#question-form").submit( (e) => {
+				e.preventDefault();
+				var dataString = $('#question-form').serialize();
+				console.log("datastring: " + dataString);
+				$.ajax({
+					type: 'POST',
+					url: 'http://localhost:3002/AnswerQuestion',
+					data: dataString,
+					dataType: 'json',
+					encode: true,
+					success: function(data) {
+						question = data;
+						addRatingAndNext();
+						console.log('success: ' + JSON.stringify(data));
+						console.log(question.type)
+					},
+					error: function(error) {
+						console.log(error);
+					},
+				})
+			})
+		})
+	</script>
+	<script type='text/javascript'>
+		var i = 0;
+		$(document).ready(() => {
+			$("#rating").on('click', (e) => {
+				var dataString = $('#rating-form').serialize()
+				console.log("datastring: " + dataString);
+				$.ajax({
+					type: 'POST',
+					url: 'http://localhost:3002/rating',
+					data: dataString,
+					dataType: 'json',
+					encode: true,
+					success: function(data) {
+						console.log('success: ' + JSON.stringify(data));
+					},
+					error: function(error) {
+						console.log(error);
+					},
+				})
+			})
+		})
+	</script>
+</html>
