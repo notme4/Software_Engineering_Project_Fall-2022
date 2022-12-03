@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<script src="../SuggestingQuestionController.js"></script>
+
+<html>
+	<head>
+		<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js'> </script>
+		<style>
+			* {
+				margin:0px;
+			}
+			html {
+				background-color: #79b4de;
+			}
+			#home-button {
+				color:red;
+				margin-bottom:1%;
+			}
+			body *{
+				display:block;
+			}
+			.middle {
+				margin-left: auto;
+				margin-right: auto;
+			}
+			#main-heading {
+				font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+				text-align: center;
+				margin-bottom: 5%;
+				color:darkcyan;
+			}
+			#question-type-error {
+				color:red;
+				background-color: transparent;
+				display: none;
+				font-family: sans-serif;
+				text-align: center;
+			}
+			#question-type {
+				margin-bottom: 5%;
+				font-size: larger;
+			}
+			#type-prompt {
+				color:grey
+			}
+			#question-info-error {
+				color:red;
+				background-color: transparent;
+				display: none;
+				font-family: sans-serif;
+				text-align: center;
+			}
+			#question-info {
+				resize: none;
+				margin-bottom: 16%;
+				border-width:medium;
+				border-color: black;
+			}
+			#submit-button {
+				background-color: rgb(10, 169, 10);
+				font-size:xx-large;
+				font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+				border-radius: 1cm;
+			}
+		</style>
+		<script type='text/javascript'>
+			$(document).ready(() => {
+			$("#suggest-form").submit( (e) => {
+				e.preventDefault();
+				var dataString = $('#suggest-form').serialize();
+				console.log("datastring: " + dataString);
+				validateSuggestionForm();
+				$.ajax({
+					type: 'GET',
+					url: 'http://localhost:3002/suggest',
+					data: dataString,
+					dataType: 'json',
+					encode: true,
+					success: function(data) {
+						question = data;
+						
+						console.log('success: ' + JSON.stringify(data));
+						console.log(question.type)
+						location.replace('home.html')
+					},
+					error: function(error) {
+						console.log(error);
+					},
+				})
+			})
+		})
+		</script>
+	</head>
+	<body>
+		<a href="home.html">
+			<button id="home-button" type="button">Home</button>
+		</a>
+		<h1 id="main-heading">Question Suggestion</h1>
+		<p id="question-type-error" class = "middle">Please select a question:</p>
+		<form id="suggest-form" action="http://localhost:3002/suggest" method="GET">
+			<select id="question-type" name='type' class = "middle">
+				<option id="type-prompt" selected="true">Type of Question:</option>
+				<option disabled="true"></option>
+				<option value="frq">Free Response</option>
+				<option value="mc">Multiple Choice</option>
+				<option value="all_apply">Check All That Apply</option>
+			</select>
+			<p id="question-info-error" class="middle">Question cannot be blank.</p>
+			<textarea id="question-info" name="question" class="middle" cols=50 rows=10 placeholder="Put all question info in here, including answers/answer choices."></textarea>
+			<button id="submit-button" class="middle" type="submit" onclick="validateSuggestionForm();">SUBMIT</button>	
+		</form>
+	</body>
+	
+</html>

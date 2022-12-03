@@ -1,7 +1,8 @@
 const Question = require("./Question.js");
 
 class SuggestedQuestion {
-	qid;
+	question;
+	type;
 	acctID;
 	date;
 
@@ -13,8 +14,9 @@ class SuggestedQuestion {
 	 * @param {number} id 
 	 * @param {number} acctID 
 	 */
-	constructor(id, acctID) {
-		this.qid = id;
+	constructor(question, type, acctID) {
+		this.question = question;
+		this.type = type
 		this.acctID = acctID;
 		this.date = new Date();
 	}

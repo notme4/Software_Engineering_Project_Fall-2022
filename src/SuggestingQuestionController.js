@@ -18,6 +18,6 @@ function validateSuggestionForm() {
         return false;
     }
     alert("Question submitted!");
-    location.replace("home.html");
+    document.getElementById("suggest-form")
     return true;
 }

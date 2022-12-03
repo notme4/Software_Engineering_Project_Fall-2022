@@ -6,6 +6,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const SuggestedQuestion = require("./SuggestedQuestion");
 const port = 3002;
 
 const server = 'http://localhost:3000';
@@ -57,6 +58,13 @@ app.post("/rating", (req, res) => {
 	console.log("rating: " + JSON.stringify(req.body));
 	question = loadQuestion(req.body['acctID'], req.body['qid']);
 	AnsweringAQuestionController.addQuestionRating(question, parseInt(req.body['rate']))
+	res.send({});
+});
+
+app.get("/suggest", (req, res) => {
+	console.log("rating: " + JSON.stringify(req.query));
+	sq = new SuggestedQuestion(req.query.question, req.query.type, req.query.acctID);
+	DatabaseManager.addSuggestedQuestion(sq);
 	res.send({});
 });
 
