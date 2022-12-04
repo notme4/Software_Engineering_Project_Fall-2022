@@ -3,6 +3,7 @@ class Question {
 	type;
 	question;
 	answers;
+	rating;
 
 	static FRQ_MAX_LENGTH = 200;
 
@@ -43,7 +44,29 @@ class Question {
 		this.id = id;
 		this.type = type;
 		this.question = question;
-		this.answers = answers;
+		this.answers = answers.map((answer) => {
+			let obj = new Object()
+			obj["answer"] = answer;
+			obj["chosen"] = 0;
+			return obj;
+		});
+		this.rating = new Rating()
+	}
+}
+
+class Rating {
+	rating;
+	respondents;
+
+	constructor() {
+		this.rating = 0;
+		this.respondents = 0;
+	}
+
+	addRating(rating) {
+		let r = this.rating * this.respondents + rating
+		this.respondents++;
+		this.rating = r / this.respondents;
 	}
 }
 

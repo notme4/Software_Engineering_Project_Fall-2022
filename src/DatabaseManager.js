@@ -3,18 +3,17 @@ const QuestionAnswer = require("./QuestionAnswer.js");
 const Question = require("./Question");
 const Account = require("./Account.js");
 const fs = require("fs");
+
 class DatabaseManager {
 	static DBFolder = "./src/DB"
 	static questionsFile = this.DBFolder + "/questions.json"
 	static answersFile = this.DBFolder + "/answers.json"
 	static accountsFile = this.DBFolder + "/accounts.json"
 	static suggestionsFile = this.DBFolder + "/suggestions.json"
-	static ratingsFile = this.DBFolder + "/ratings.json"
 	static questions;
 	static answers;
 	static accounts;
 	static suggestions;
-	static ratings;
 
 	static initialize() {
 		fs.readFile(this.questionsFile, (err, data) => {
@@ -92,7 +91,7 @@ class DatabaseManager {
 	 * @todo implement
 	 */
 	static searchQuestion(parameters) {
-
+		return questions;
 	}
 
 	/**
@@ -154,9 +153,30 @@ class DatabaseManager {
 	 * @todo implement
 	 */
 	static addQuestionAnswer(questionAnswer) {
-		this.answers.push(questionAnswer);
-		console.log(this.answers)
-		fs.writeFile(this.answersFile, JSON.stringify(this.answers), err => {
+		let question;
+		for(q in questions) {
+			if(q["id"] == qid) {
+				question = q;
+				break;
+			}
+		}
+		switch (question.type) {
+			case Question.QType.mc:
+				question.answers[questionAnswer.answer]["chosen"]++;
+				break;
+			case Question.QType.all_apply:
+				for(i = 1; i < question.answers.length(); i << 2){
+					if(questionAnswer.answer & 1 != 0) {
+						question.answers[i]["chosen"]++
+					}
+				}
+				break;
+			case Question.QType.frq:
+				let obj = new Object()
+				obj["response"] = questionAnswer.answer
+				question.answers.push(obj)
+			}
+		fs.writeFile(this.questionsFile, JSON.stringify(this.questions), err => {
 			console.log("in write");
 			if(err) {
 				console.error(err);
@@ -249,11 +269,13 @@ class DatabaseManager {
 	 * @todo implement 
 	 */
 	static addQuestionRating(qid, rating) {
-		obj = new Object()
-		obj['qid'] = qid;
-		obj['rating'] = rating;
-		this.ratings.push(obj);
-		fs.writeFile(this.ratingsFile, JSON.stringify(this.ratingg), err => {
+		for(question in questions) {
+			if(question["id"] == qid) {
+				question.rating.addRating(rating)
+				break;
+			}
+		}
+		fs.writeFile(this.questionsFile, JSON.stringify(this.questions), err => {
 			console.log("in write");
 			if(err) {
 				console.error(err);

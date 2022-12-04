@@ -1,19 +1,179 @@
 [
 	{
-		"id":	-1,
+		"id":	1,
 		"type":	"mc",
-		"question":	"what is your favorite class?",
-		"answers": ["science", "social studies", "english", "math"]
+		"question":	"What is your favorite class?",
+		"answers": [
+			{
+				"response": "Science",
+				"chosen": 2
+			},
+			{
+				"response": "Social Studies",
+				"chosen": 1
+			},
+			{
+				"response": "English",
+				"chosen": 1
+			},
+			{
+				"response": "Math",
+				"chosen": 0
+			}
+		],
+		"rating": {
+			"score": 5,
+			"respondents": 2
+		}
 	},
 	{
-		"id":	-2,
+		"id":	2,
 		"type":	"all_apply",
-		"question":	"which cereals do you like?",
-		"answers": ["cheerios", "cinnamon toast crunch", "cocoa puffs", "marshmallow mateys"]
+		"question":	"Which cereals do you like?",
+		"answers": [
+			{
+				"response": "Cheerios",
+				"chosen": 2
+			},
+			{
+				"response": "Fruit Loops",
+				"chosen": 52
+			},
+			{
+                "response": "Apple Jacks",
+                "favorites": 37
+            },
+			{
+				"response": "Cinnamon Toast Crunch",
+				"chosen": 68
+			},
+			{
+				"response": "Cocoa Puffs",
+				"chosen": 36
+			},
+			{
+				"response": "Lucky Charms",
+				"chosen": 76
+			},
+			{
+                "response": "Captain Crunch",
+                "favorites": 20
+            },
+            {
+                "response": "Frosted Flakes",
+                "favorites": 11
+            }
+		],
+		"rating": {
+			"score": 5,
+			"respondents": 2
+		}
 	},
 	{
-		"id":	-3,
+		"id":	3,
 		"type":	"frq",
-		"question":	"why do you hate math?"
+		"question":	"why do you hate math?",
+		"answers": [
+			{
+                "response": "it's hard"
+            },
+            {
+                "response": "I don't like numbers"
+            },
+            {
+                "response": "it lowers my GPA"
+            },
+            {
+                "response": "it is confusing with letters, numbers, and symbols"
+            },
+            {
+                "response": "I barely use it in my personal life"
+            }
+		],
+		"rating": {
+			"score": 5,
+			"respondents": 2
+		}
+	},
+	{
+		"id": 4,
+		"type": "mc",
+		"question": "What is the most useful U.S. currency?",
+		"answers": [
+			{
+                "response": "$1",
+                "favorites": 4
+            },
+            {
+                "response": "$5",
+                "favorites": 99
+            },
+            {
+                "response": "$10",
+                "favorites": 476
+            },
+            {
+                "response": "$20",
+                "favorites": 567
+            },
+            {
+                "response": "$50",
+                "favorites": 112
+            },
+            {
+                "response": "$100",
+                "favorites": 20
+            }
+		],
+		"rating": {
+			"score": 3.8,
+			"respondents": 35
+		}
+	},
+	{
+		"id": 5,
+		"type": "mc",
+		"question": "What is your favorite operating system?",
+		"answers": [
+			{
+                "response": "Windows",
+                "favorites": "2492"
+            },
+            {
+                "response": "MacOS",
+                "favorites": "1900"
+            },
+            {
+                "response": "Linux",
+                "favorites": "956"
+            }
+		],
+		"rating": {
+			"score": 2.32,
+			"respondents": 547
+		}
+	},
+	{
+		"id": 6,
+		"type": "mc",
+		"question": "Do you pour cereal before the milk or the milk before the cereal?",
+		"answers": [
+			{
+                "response": "Cereal",
+                "favorites": 9001
+            },
+            {
+                "response": "Milk",
+                "favorites": 2
+            },
+			{
+				"response": "I don't eat cereal",
+				"chosen": 2483
+			}
+		],
+		"rating": {
+			"score": 5,
+			"respondents": 9001
+		}
 	}
 ]
