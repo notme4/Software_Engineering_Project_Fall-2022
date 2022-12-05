@@ -1,4 +1,5 @@
 const AnsweringAQuestionController = require("../src/AnsweringAQuestionController");
+const Account = require("./Account")
 const Question = require("../src/Question");
 const QuestionAnswer = require("./QuestionAnswer");
 const DatabaseManager = require("./DatabaseManager");

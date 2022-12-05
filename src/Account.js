@@ -132,3 +132,7 @@ function f() {
 
     
 }
+
+if(typeof(module) === 'object') {
+	module.exports = Account;
+}

@@ -1,13 +1,1 @@
-[
-	{
-		"id": -1,
-		"username": "username",
-		"password": "password",
-		"country": "U.S.",
-		"isAdult": true,
-		"address": "yes",
-		"ethnicity": "yes",
-		"gender": "other",
-		"dob": "2022-12-03T04:21:13.901Z"
-	}
-]
+[{"id":-1,"username":"username","password":"password","country":"U.S.","isAdult":true,"address":"yes","ethnicity":"yes","gender":"other","dob":"2022-12-03T04:21:13.901Z"},{"id":352817691,"username":"username1","password":"password2","country":"no","isAdult":false,"address":"","ethnicity":"","gender":"","dob":null}]
