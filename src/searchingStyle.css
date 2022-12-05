@@ -44,6 +44,12 @@ form .fa-magnifying-glass{
 .topic-names {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(750px, 1fr));
+    gap: .25rem;
+    margin-top: 1rem;
+}
+.topics {
+    border: 1px solid black;
+    padding: .5rem;
 }
 .topics > .topicName {
     margin-bottom: .25rem;
@@ -55,7 +61,5 @@ form .fa-magnifying-glass{
 .hide {
     display: none;
 }
-.show {
-    display: block;
-}
+
     
