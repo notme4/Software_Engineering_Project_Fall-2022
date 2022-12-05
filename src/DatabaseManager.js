@@ -154,9 +154,10 @@ class DatabaseManager {
 				question.answers[questionAnswer.answer]["chosen"]++;
 				break;
 			case Question.QType.all_apply:
-				for(i = 1; i < question.answers.length(); i << 2){
-					if(questionAnswer.answer & 1 != 0) {
-						question.answers[i]["chosen"]++
+				for(let i = 1; i <= question['answers']['length']; i++){
+					let j = 1 << i
+					if(questionAnswer.answer & j != 0) {
+						question.answers[i-1]["chosen"]++
 					}
 				}
 				break;
