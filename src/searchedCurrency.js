@@ -3,7 +3,7 @@ const topicCardContainer = document.querySelector("[data-topic-cards-container]"
 
 let topics = []
 
-fetch("./searchingDatabase.json")
+fetch("./DB/searchingDatabase.json")
 .then(res => res.json())
 .then(data => {
     topics = data.map(question => {
