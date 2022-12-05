@@ -211,7 +211,7 @@ class DatabaseManager {
 	 */
 	static addSuggestedQuestion(suggestedQuestion) {
 		this.suggestions.push(suggestedQuestion)
-		fs.writeFile(this.suggestions, JSON.stringify(this.suggestions), err => {
+		fs.writeFile(this.suggestionsFile, JSON.stringify(this.suggestions), err => {
 			console.log("in write");
 			if(err) {
 				console.error(err);
