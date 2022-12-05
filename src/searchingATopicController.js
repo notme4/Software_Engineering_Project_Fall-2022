@@ -12,7 +12,7 @@ searchInput.addEventListener("input", e => {
     })
 }) 
 
-fetch("./searchingDatabase.json")
+fetch("./DB/searchingDatabase.json")
 .then(res => res.json())
 .then(data => {
     topics = data.map(question => {
