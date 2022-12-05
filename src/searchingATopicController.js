@@ -4,23 +4,25 @@ const searchInput = document.querySelector("[data-search]")
 
 let topics = []
 
-searchInput.addEventListener("search", e => {
+searchInput.addEventListener("input", e => {
     const value = e.target.value.toLowerCase()
     topics.forEach(question => {
-        const isVisible = question.topic.toLowerCase().includes(value)
+        const isVisible = question.name.toLowerCase().includes(value)
         question.element.classList.toggle("hide", !isVisible)
     })
 }) 
 
-fetch("./database.json")
+fetch("./DB/searchingDatabase.json")
 .then(res => res.json())
 .then(data => {
     topics = data.map(question => {
         const topicCard = topicTemplate.content.cloneNode(true).children[0]
         const name = topicCard.querySelector("[data-topicName]")
-        name.textContent = question.topic
+        //document.getElementsByClassName(topics.topicName).innerHTML=
+        name.innerHTML = "<a href=" + question.url + ">" + question.topic + "</a>"
+        
         topicCardContainer.append(topicCard)
-        return{ name: question.topic, element: topicCard }
+        return{ name: question.topic, link: question.url, element: topicCard }
     })
 })
    

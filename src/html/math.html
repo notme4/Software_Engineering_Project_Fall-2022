@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href="SearchedStyle.css">
+    <title>"Why do you hate math?"</title>
+    <script type=""module" src="../searchedMath.js" defer></script>
+    <script>
+      fetch("../DB/searchingDatabase.json")
+    </script>
+</head>
+<body>
+    <div class="topic-names" data-topic-cards-container></div>  
+    <template data-topic-template>
+      <div class="topics">
+         <div class="topicName" data-topicName></div>
+         <div class="answers" data-answers></div>
+      </div>
+    </template>
+</body>
+</html>
