@@ -7,11 +7,9 @@ const fs = require("fs");
 class DatabaseManager {
 	static DBFolder = "./src/DB"
 	static questionsFile = this.DBFolder + "/questions.json"
-	static answersFile = this.DBFolder + "/answers.json"
 	static accountsFile = this.DBFolder + "/accounts.json"
 	static suggestionsFile = this.DBFolder + "/suggestions.json"
 	static questions;
-	static answers;
 	static accounts;
 	static suggestions;
 
@@ -21,12 +19,6 @@ class DatabaseManager {
 				console.error(err) 
 			}
 			this.questions = JSON.parse(data);
-		})
-		fs.readFile(this.answersFile, (err, data) => {
-			if(err) {
-				console.error(err) 
-			}
-			this.answers = JSON.parse(data);
 		})
 		fs.readFile(this.accountsFile, (err, data) => {
 			if(err) {
@@ -39,12 +31,6 @@ class DatabaseManager {
 				console.error(err) 
 			}
 			this.suggestions = JSON.parse(data);
-		})
-		fs.readFile(this.ratingsFile, (err, data) => {
-			if(err) {
-				console.error(err) 
-			}
-			this.ratings = JSON.parse(data);
 		})
 	}
 	
@@ -154,13 +140,16 @@ class DatabaseManager {
 	 */
 	static addQuestionAnswer(questionAnswer) {
 		let question;
-		for(q in questions) {
-			if(q["id"] == qid) {
+		for(let i in this.questions) {
+			let q = this.questions[i]
+			console.log(q)
+			console.log(questionAnswer.qid)
+			if(q["id"] == parseInt(questionAnswer.qid)) {
 				question = q;
 				break;
 			}
 		}
-		switch (question.type) {
+		switch (question['type']) {
 			case Question.QType.mc:
 				question.answers[questionAnswer.answer]["chosen"]++;
 				break;
@@ -269,9 +258,10 @@ class DatabaseManager {
 	 * @todo implement 
 	 */
 	static addQuestionRating(qid, rating) {
-		for(question in questions) {
+		for(let i in this.questions) {
+			let question = this.questions[i];
 			if(question["id"] == qid) {
-				question.rating.addRating(rating)
+				Question.addRating(question, rating)
 				break;
 			}
 		}

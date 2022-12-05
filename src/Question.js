@@ -52,10 +52,14 @@ class Question {
 		});
 		this.rating = new Rating()
 	}
+
+	static addRating(question, rating) {
+		Rating.addRating(question.rating, rating)
+	}
 }
 
 class Rating {
-	rating;
+	score;
 	respondents;
 
 	constructor() {
@@ -63,10 +67,11 @@ class Rating {
 		this.respondents = 0;
 	}
 
-	addRating(rating) {
-		let r = this.rating * this.respondents + rating
-		this.respondents++;
-		this.rating = r / this.respondents;
+	static addRating(rating, score) {
+		let r = (rating.score * rating.respondents) + score
+		console.log(r)
+		rating.respondents++;
+		rating.score = r / rating.respondents;
 	}
 }
 

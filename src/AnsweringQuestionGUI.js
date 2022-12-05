@@ -66,8 +66,8 @@ function buildQuestion() {
 	for (i in question.answers) {
 		id = char - UPPER_CASE;
 		result += `<label onclick='chooseResponseMC(${id})'>`;
-		result +=	`<input id='${id}' name='question' value='${question.answers[i]}' type='radio' class='button' style='border-radius: 50%;'>`;
-		result +=	`<p>	${question.answers[i]}</p>`;
+		result +=	`<input id='${id}' name='question' value='${question.answers[i]["response"]}' type='radio' class='button' style='border-radius: 50%;'>`;
+		result +=	`<p>	${question.answers[i]["response"]}</p>`;
 		result += "</label><br>";
 		char++;
 	}
@@ -89,8 +89,8 @@ function buildAllApplyQuestion(question) {
 	for (i in question.answers) {
 		id = (1 << (char - LOWER_CASE) );
 		result += `<label onclick='chooseResponseAllApply(${id});'>`;
-		result += 	`<input id='${id}' name='question${id}' value='${question.answers[i]}' type='checkbox' class='button'>`;
-		result += 	`<p>	${question.answers[i]}</p>`;
+		result += 	`<input id='${id}' name='question${id}' value='${question.answers[i]["response"]}' type='checkbox' class='button'>`;
+		result += 	`<p>	${question.answers[i]["response"]}</p>`;
 		result += "</label> <br>";
 		char++;
 	}
